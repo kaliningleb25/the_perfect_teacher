@@ -14,9 +14,18 @@ script/script = ExtResource( 1 )
 transform/pos = Vector2( 660.258, 687.47 )
 texture = ExtResource( 2 )
 
-[node name="student" type="Sprite" parent="."]
+[node name="student" type="Sprite" parent="." groups=[
+"students",
+]]
 
 transform/pos = Vector2( 124.604, 691.767 )
+texture = ExtResource( 3 )
+
+[node name="student1" type="Sprite" parent="." groups=[
+"students",
+]]
+
+transform/pos = Vector2( 89.7284, 688.446 )
 texture = ExtResource( 3 )
 
 [node name="Control" type="Control" parent="."]
@@ -58,7 +67,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="b_right" type="Button" parent="Control/dialog"]
+[node name="b_correct" type="Button" parent="Control/dialog"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -71,7 +80,7 @@ margin/bottom = 153.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "Right!"
+text = "Correct!"
 flat = false
 
 [node name="b_wrong" type="Button" parent="Control/dialog"]
@@ -89,5 +98,20 @@ enabled_focus_mode = 2
 shortcut = null
 text = "Wrong!"
 flat = false
+
+[node name="score" type="Label" parent="Control"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 17.0
+margin/top = 10.0
+margin/right = 65.0
+margin/bottom = 24.0
+text = "Score:"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 
