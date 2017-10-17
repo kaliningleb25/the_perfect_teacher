@@ -16,7 +16,7 @@ const INITIAL_STUDENT_SPEED = 280
 var student_speed = INITIAL_STUDENT_SPEED
 
 onready var dialog = get_node("Control/dialog")
-onready var question = get_node("Control/dialog/question")
+
 onready var b_right = get_node("Control/dialog/b_right")
 onready var b_wrong = get_node("Control/dialog/b_wrong")
 
@@ -25,10 +25,11 @@ func _ready():
 	# Initialization here
 	screen_size = get_viewport_rect().size
 	teacher_size = get_node("teacher").get_texture().get_size()
+
+	set_process(true)
 	
 
 	
-	set_process(true)
 	
 func _process(delta):
 	var student_pos = get_node("student").get_pos()
@@ -37,16 +38,22 @@ func _process(delta):
 	
 	student_pos += direction * student_speed * delta
 
+		# FOR TEST ----
+
+	#--------------
+	
 	# Pause, change direction and increase speed when come to teacher and check student's answer
 	if ((teacher_rect.has_point(student_pos))):
 		dialog.show()
+
 		student_pos = get_node("student").get_pos()
 		if (b_right.is_pressed() or b_wrong.is_pressed()):
 			direction.x = -direction.x
-			#direction = direction.normalized()
 			student_speed *= 1.1
 		
 	
 	get_node("student").set_pos(student_pos)
 	
+
+
 
