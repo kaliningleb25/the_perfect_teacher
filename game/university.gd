@@ -93,11 +93,11 @@ func _ready():
 
 func _process(delta):
 	if (can_go):
-		can_go = false
 		var new_student = scene.instance()
 		get_parent().add_child(new_student)
 		#counter += 1
 		#scr.set_text(str(counter))
+		can_go = false
 		timer.start()
 	
 		
