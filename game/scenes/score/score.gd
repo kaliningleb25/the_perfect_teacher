@@ -1,16 +1,16 @@
 extends Control
 
-onready var score = get_node("test")
-onready var counter = 0
+# MEMBER VARIABLES
+# Get a label_score node
+onready var score = get_node("label_score")
 
 func _ready():
 	set_process(true)
 
 func _process(delta):
-	score.set_text("Score: " + str(global.score))
+	# Show a current score(points):
+	score.set_text("Points: " + str(global.score))
+	# Check gameover
 	if (global.gameovercheck):
 		queue_free()
-	
 
-	
-	
