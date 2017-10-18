@@ -92,13 +92,15 @@ func _ready():
 	
 
 func _process(delta):
+	
 	if (can_go):
-		var new_student = scene.instance()
-		get_parent().add_child(new_student)
+		if (global.dialog_scene_counter > 0):
+			var new_student = scene.instance()
+			get_parent().add_child(new_student)
 		#counter += 1
 		#scr.set_text(str(counter))
-		can_go = false
-		timer.start()
+			can_go = false
+			timer.start()
 	
 		
 	#var student_pos = get_tree().get_root().get_node("res://scenes/student/student1").get_pos()
@@ -118,7 +120,7 @@ func _process(delta):
 
 	
 	var teacher_pos = get_node("teacher").get_pos()
-	
+	#print(teacher_pos.x)
 
 	var teacher_rect = Rect2(teacher_pos - teacher_size*0.5, teacher_size)
 	

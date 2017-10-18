@@ -34,10 +34,15 @@ func answer():
 		check = 1
 		#dialog.hide()
 		queue_free()
+		#global.dialog_scene_counter -= 1
+		#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
+		
 	elif (b_wrong.is_pressed()):
 		check = 0
 		#dialog.hide()
 		queue_free()
+		#global.dialog_scene_counter -= 1
+		#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		
 	
 	return check

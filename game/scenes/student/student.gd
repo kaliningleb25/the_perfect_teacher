@@ -24,7 +24,9 @@ func _ready():
 func _process(delta):
 	set_pos(Vector2(get_pos().x + MOVEMENT_SPEED, get_pos().y))
 	#print(get_pos().x)
-	if (get_pos().x >= 650 and get_pos().x <= 650.6):
+	#print(get_pos().x)
+	#if (get_pos().x >= 650 and get_pos().x <= 650.6):
+	if (get_pos().x == 624.565674):
 		var new_dialog = dialog_scene.instance()
 		get_parent().add_child(new_dialog)
 		global.dialog_scene_counter += 1
@@ -32,6 +34,6 @@ func _process(delta):
 
 
 		
-	if ((get_pos().x > OS.get_window_size().x) or (get_pos().x >= 650 and get_pos().x <= 670)):
+	if ((get_pos().x > OS.get_window_size().x) or (get_pos().x == 624.565674)):#or (get_pos().x >= 650 and get_pos().x <= 670)):
 		queue_free()
 
