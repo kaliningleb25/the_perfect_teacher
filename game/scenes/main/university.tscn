@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=3 format=1]
 
 [ext_resource path="res://university.gd" type="Script" id=1]
 [ext_resource path="res://scenes/main/teacher.png" type="Texture" id=2]
-[ext_resource path="res://scenes/main/student.png" type="Texture" id=3]
-[ext_resource path="res://Dialog.gd" type="Script" id=4]
 
 [node name="Node2D" type="Node2D"]
 
@@ -14,19 +12,14 @@ script/script = ExtResource( 1 )
 transform/pos = Vector2( 660.258, 687.47 )
 texture = ExtResource( 2 )
 
-[node name="student" type="Sprite" parent="." groups=[
-"students",
-]]
+[node name="student1" parent="teacher" instance_placeholder="res://scenes/student/student.tscn"]
 
-transform/pos = Vector2( 124.604, 691.767 )
-texture = ExtResource( 3 )
+[node name="Timer" type="Timer" parent="."]
 
-[node name="student1" type="Sprite" parent="." groups=[
-"students",
-]]
-
-transform/pos = Vector2( 89.7284, 688.446 )
-texture = ExtResource( 3 )
+process_mode = 0
+wait_time = 4.0
+one_shot = false
+autostart = false
 
 [node name="Control" type="Control" parent="."]
 
@@ -38,66 +31,6 @@ margin/left = 0.0
 margin/top = 0.0
 margin/right = 40.0
 margin/bottom = 40.0
-script/script = ExtResource( 4 )
-
-[node name="dialog" type="Panel" parent="Control"]
-
-visibility/visible = false
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 436.0
-margin/top = 381.0
-margin/right = 794.0
-margin/bottom = 572.0
-
-[node name="question" type="Label" parent="Control/dialog"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 118.0
-margin/top = 54.0
-margin/right = 226.0
-margin/bottom = 68.0
-text = "Some question..."
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="b_correct" type="Button" parent="Control/dialog"]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 64.0
-margin/top = 133.0
-margin/right = 112.0
-margin/bottom = 153.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "Correct!"
-flat = false
-
-[node name="b_wrong" type="Button" parent="Control/dialog"]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 219.0
-margin/top = 132.0
-margin/right = 276.0
-margin/bottom = 152.0
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "Wrong!"
-flat = false
 
 [node name="score" type="Label" parent="Control"]
 
@@ -106,12 +39,14 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 17.0
-margin/top = 10.0
-margin/right = 65.0
-margin/bottom = 24.0
+margin/top = 19.0
+margin/right = 57.0
+margin/bottom = 33.0
 text = "Score:"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
 

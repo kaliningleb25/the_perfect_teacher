@@ -4,15 +4,19 @@ onready var dialog = get_node("dialog")
 onready var question = get_node("dialog/question")
 onready var b_correct = get_node("dialog/b_correct")
 onready var b_wrong = get_node("dialog/b_wrong")
-onready var score = get_node("score")
 
-onready var scr_count = 0
+onready var score_scene = load("res://scenes/score/score.tscn") # will load when parsing the script
+#onready var score = get_node("score")
+
+onready var check_answer = -1
 
 onready var check = -1
 
+onready var counter = 0
+
 onready var questions = {
 "A cat has five legs" : 0,
-"People have two eyes" : 1 
+"People have two eyes" : 1
 }
 
 onready var qst = questions.keys()
@@ -28,10 +32,13 @@ func get_question():
 func answer():
 	if (b_correct.is_pressed()):
 		check = 1
-		dialog.hide()
-	if (b_wrong.is_pressed()):
+		#dialog.hide()
+		queue_free()
+	elif (b_wrong.is_pressed()):
 		check = 0
-		dialog.hide()
+		#dialog.hide()
+		queue_free()
+		
 	
 	return check
 
@@ -42,9 +49,15 @@ func check_answer():
 	#print("check ", check)
 	
 	if (questions[string] == answer()):
-		scr_count = 1
-		score.set_text("Score: " + str(scr_count))
+		check_answer = 1
+		global.score += 1
+		var new_score = score_scene.instance()
+		get_parent().add_child(new_score)
+	else:
+		check_answer = 0
+##		score.set_text("Score: " + str(scr_count))
 	#TODO else: GAMEOVER!
+	return check_answer
 
 
 func _ready():
@@ -55,7 +68,7 @@ func _ready():
 	
 
 	set_process(true)
-	
+
 func _process(delta):
 	check_answer()
 	
