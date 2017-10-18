@@ -8,6 +8,8 @@ func _ready():
 
 func _process(delta):
 	score.set_text("Score: " + str(global.score))
+	if (global.gameovercheck):
+		queue_free()
 	
 
 	

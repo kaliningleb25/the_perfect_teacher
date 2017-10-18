@@ -36,4 +36,8 @@ func _process(delta):
 		
 	if ((get_pos().x > OS.get_window_size().x) or (get_pos().x == 624.565674)):#or (get_pos().x >= 650 and get_pos().x <= 670)):
 		queue_free()
+		
+	if (global.gameovercheck):
+		queue_free()
+		
 

@@ -5,6 +5,7 @@ extends Node
 # var b = "textvar"
 var score = 0
 var dialog_scene_counter = 0
+var gameovercheck = false
 
 func _ready():
 	# Called every time the node is added to the scene.

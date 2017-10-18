@@ -1,11 +1,5 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
-#export (PackedScene) var student_scene
-
 # Member variables
 var screen_size
 var teacher_size
@@ -101,6 +95,9 @@ func _process(delta):
 		#scr.set_text(str(counter))
 			can_go = false
 			timer.start()
+	
+	if (global.gameovercheck):
+		queue_free()
 	
 		
 	#var student_pos = get_tree().get_root().get_node("res://scenes/student/student1").get_pos()

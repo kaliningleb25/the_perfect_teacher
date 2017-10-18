@@ -33,35 +33,42 @@ func answer():
 	if (b_correct.is_pressed()):
 		check = 1
 		#dialog.hide()
+		if (global.dialog_scene_counter > 1):
+			global.dialog_scene_counter -= 1
+			print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		queue_free()
-		#global.dialog_scene_counter -= 1
-		#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		
 	elif (b_wrong.is_pressed()):
 		check = 0
 		#dialog.hide()
+		if (global.dialog_scene_counter > 1):
+			global.dialog_scene_counter -= 1
+			print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		queue_free()
-		#global.dialog_scene_counter -= 1
-		#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
+		
 		
 	
 	return check
 
 func check_answer():
 
-	answer()
+	var ch = answer()
 	#print("wait for answer: ", questions[string])
 	#print("check ", check)
 	
-	if (questions[string] == answer()):
+	if (questions[string] == check):
 		check_answer = 1
 		global.score += 1
 		var new_score = score_scene.instance()
 		get_parent().add_child(new_score)
-	else:
+	elif ((questions[string] != check) and (check != -1)):
 		check_answer = 0
+		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
+		global.gameovercheck = true
+		
 ##		score.set_text("Score: " + str(scr_count))
 	#TODO else: GAMEOVER!
+	
 	return check_answer
 
 
@@ -76,4 +83,6 @@ func _ready():
 
 func _process(delta):
 	check_answer()
+	if (global.gameovercheck):
+		queue_free()
 	
