@@ -4,7 +4,11 @@ extends Control
 # Get a label_score node
 onready var score = get_node("label_score")
 
+
+
 func _ready():
+	print("dialog_scene_counter ", global.dialog_scene_counter)
+	
 	set_process(true)
 
 func _process(delta):

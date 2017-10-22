@@ -19,6 +19,37 @@ var questions = {
 "A car can fly" : 0
 }
 
+var questions_lvl2 = {
+"Test1" : 1,
+"Test2" : 1,
+"Test3" : 1
+}
+
+var questions_lvl3 = {
+"SuperTest1" : 0,
+"SuperTest2" : 0,
+"SuperTest3" : 0
+}
+
+var level = 0
+
+var all_questions = [questions, questions_lvl2, questions_lvl3]
+
+#var level_questions = all_questions[level]
+
+
+
+func questions_last(qsts):
+	return qsts.size()
+
+func ready_next_level(qsts):
+	if(questions_last(qsts) == 0):
+		return true
+	else:
+		return false
+		
+	
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here

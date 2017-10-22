@@ -24,6 +24,7 @@ func _process(delta):
 			can_go = false
 			timer.start()
 
+
 	# Check if gameover 1
 	if (global.dialog_scene_counter > 4):
 		global.gameovercheck = true
@@ -32,6 +33,7 @@ func _process(delta):
 	if (global.gameovercheck):
 		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
 		queue_free()
+
 
 # If time is out - next student can go
 func _on_Timer_timeout():

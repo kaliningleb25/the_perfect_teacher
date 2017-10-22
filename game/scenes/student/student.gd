@@ -7,10 +7,13 @@ const MOVEMENT_SPEED = 2
 # Dialog scene
 onready var dialog_scene = load("res://scenes/dialog/dialog.tscn") # will load when parsing the script
 
+
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-
+	
+	
 	set_process(true)
 
 func _process(delta):

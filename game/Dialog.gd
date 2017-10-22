@@ -22,10 +22,17 @@ onready var check = -1
 #}
 
 # Get keys(string) from questions
-onready var qst = global.questions.keys()
+#onready var qst = global.questions.keys()
+onready var qst = global.all_questions[global.level].keys()
 
 onready var rand_index
 onready var string
+
+# For store question
+onready var q
+# For store value of question (1 or 0)
+onready var val
+
 
 onready var indexes = []
 
@@ -33,24 +40,28 @@ onready var indexes = []
 # Get a random question
 func get_question():
 	randomize()
-	rand_index = randi()%qst.size()
-	
-	
-		#print(used_indexes)
-	#else:
-	#	print("No questions last!")
+	if (global.all_questions[global.level].keys().size() != 0):
+		rand_index = randi()%global.all_questions[global.level].keys().size()
 		
-	#print(indexes)
-	string = qst[rand_index]
-	
-	
-	
-	question.set_text(string)
-	
-	
+		string = global.all_questions[global.level].keys()[rand_index]
+		
+		question.set_text(string)
+		q = string
+		val = global.all_questions[global.level][string]
+		#print(val)
+		#print(string)
+		global.all_questions[global.level].erase(string)
+	#print(global.questions)
+	else:
+		# TODO Go to the next level
+		#print("Empty")
+		queue_free()
 	
 
-# Whic button is pressed
+	
+
+
+# Which button is pressed
 func answer():
 	if (b_correct.is_pressed()):
 		check = 1
@@ -72,15 +83,15 @@ func answer():
 # "CORRECT" or "WRONG" answer
 func check_answer():
 	answer()
-	if (global.questions[string] == check):
+	if (val == check):
 		check_answer = 1
 		global.score += 1
 		var new_score = score_scene.instance()
 		get_parent().add_child(new_score)
-		global.questions.erase(string)
-		print(global.questions)
+		#global.questions.erase(string)
+		#print(global.questions)
 		
-	elif ((global.questions[string] != check) and (check != -1)):
+	elif ((val != check) and (check != -1)):
 		check_answer = 0
 		global.gameovercheck = true
 		
@@ -89,17 +100,34 @@ func check_answer():
 	
 	return check_answer
 
+func level_up():
+	global.level += 1
+	#print(global.level)
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	
+	if(global.ready_next_level(global.all_questions[global.level].keys())):
+		if(global.dialog_scene_counter == 1):
+			print ("Ready to go to the next level!")
+			level_up()
+		else :
+			#global.gameovercheck = true
+			print("gameover?")
+	print(global.level)
+	
 	get_question()
 	set_process(true)
 
 func _process(delta):
 	check_answer()
-	if (qst.size() == 0):
-		queue_free()
+	#print(global.level_questions)
+
+	#print(global.level_questions)
+	#if (qst.size() == 0):
+		# //TODO Go to Next level?
+	#	queue_free()
 	if (global.gameovercheck):
 		queue_free()
 	
