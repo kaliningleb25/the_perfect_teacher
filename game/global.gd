@@ -11,6 +11,14 @@ var dialog_scene_counter = 0
 # 2 - If teahcer choose wrong answer
 var gameovercheck = false
 
+var used_index = [0,1]
+
+var questions = {
+"A cat has five legs" : 0,
+"People have two eyes" : 1,
+"A car can fly" : 0
+}
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here

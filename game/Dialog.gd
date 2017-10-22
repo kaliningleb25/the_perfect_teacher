@@ -15,23 +15,40 @@ onready var check_answer = -1
 onready var check = -1
 
 # Questions with paramter (1 - correct, 0 - wrong)
-onready var questions = {
-"A cat has five legs" : 0,
-"People have two eyes" : 1
-}
+#onready var questions = {
+#"A cat has five legs" : 0,
+#"People have two eyes" : 1,
+#"A car can fly" : 0
+#}
 
 # Get keys(string) from questions
-onready var qst = questions.keys()
+onready var qst = global.questions.keys()
 
 onready var rand_index
 onready var string
+
+onready var indexes = []
+
 
 # Get a random question
 func get_question():
 	randomize()
 	rand_index = randi()%qst.size()
+	
+	
+		#print(used_indexes)
+	#else:
+	#	print("No questions last!")
+		
+	#print(indexes)
 	string = qst[rand_index]
+	
+	
+	
 	question.set_text(string)
+	
+	
+	
 
 # Whic button is pressed
 func answer():
@@ -39,28 +56,36 @@ func answer():
 		check = 1
 		if (global.dialog_scene_counter > 1):
 			global.dialog_scene_counter -= 1
-			print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
+			#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		queue_free()
 	elif (b_wrong.is_pressed()):
 		check = 0
 		if (global.dialog_scene_counter > 1):
 			global.dialog_scene_counter -= 1
-			print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
+			#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		queue_free()
+		
+
 	
 	return check
 
 # "CORRECT" or "WRONG" answer
 func check_answer():
 	answer()
-	if (questions[string] == check):
+	if (global.questions[string] == check):
 		check_answer = 1
 		global.score += 1
 		var new_score = score_scene.instance()
 		get_parent().add_child(new_score)
-	elif ((questions[string] != check) and (check != -1)):
+		global.questions.erase(string)
+		print(global.questions)
+		
+	elif ((global.questions[string] != check) and (check != -1)):
 		check_answer = 0
 		global.gameovercheck = true
+		
+		
+	
 	
 	return check_answer
 
@@ -73,6 +98,8 @@ func _ready():
 
 func _process(delta):
 	check_answer()
+	if (qst.size() == 0):
+		queue_free()
 	if (global.gameovercheck):
 		queue_free()
 	
