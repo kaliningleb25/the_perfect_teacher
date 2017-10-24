@@ -23,7 +23,7 @@ onready var check = -1
 
 # Get keys(string) from questions
 #onready var qst = global.questions.keys()
-onready var qst = global.all_questions[global.level].keys()
+#onready var qst = global.all_questions[global.level].keys()
 
 onready var rand_index
 onready var string
@@ -65,13 +65,13 @@ func get_question():
 func answer():
 	if (b_correct.is_pressed()):
 		check = 1
-		if (global.dialog_scene_counter > 1):
+		if (global.dialog_scene_counter > 0):
 			global.dialog_scene_counter -= 1
 			#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		queue_free()
 	elif (b_wrong.is_pressed()):
 		check = 0
-		if (global.dialog_scene_counter > 1):
+		if (global.dialog_scene_counter > 0):
 			global.dialog_scene_counter -= 1
 			#print("global.dialog_scene_counter ", str(global.dialog_scene_counter))
 		queue_free()
@@ -100,21 +100,12 @@ func check_answer():
 	
 	return check_answer
 
-func level_up():
-	global.level += 1
-	#print(global.level)
+
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	
-	if(global.ready_next_level(global.all_questions[global.level].keys())):
-		if(global.dialog_scene_counter == 1):
-			print ("Ready to go to the next level!")
-			level_up()
-		else :
-			#global.gameovercheck = true
-			print("gameover?")
 	print(global.level)
 	
 	get_question()

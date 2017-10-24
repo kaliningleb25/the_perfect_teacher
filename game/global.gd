@@ -11,24 +11,27 @@ var dialog_scene_counter = 0
 # 2 - If teahcer choose wrong answer
 var gameovercheck = false
 
-var used_index = [0,1]
+var next_student = true
 
 var questions = {
 "A cat has five legs" : 0,
 "People have two eyes" : 1,
-"A car can fly" : 0
+"A car can fly" : 0,
+"Lily has blue eyes" : 1
 }
 
 var questions_lvl2 = {
 "Test1" : 1,
 "Test2" : 1,
-"Test3" : 1
+"Test3" : 1,
+"Test4" : 1
 }
 
 var questions_lvl3 = {
 "SuperTest1" : 0,
 "SuperTest2" : 0,
-"SuperTest3" : 0
+"SuperTest3" : 0,
+"SuperTest4" : 0
 }
 
 var level = 0
@@ -37,6 +40,7 @@ var all_questions = [questions, questions_lvl2, questions_lvl3]
 
 #var level_questions = all_questions[level]
 
+var can_go = false
 
 
 func questions_last(qsts):

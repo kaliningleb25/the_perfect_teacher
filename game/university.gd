@@ -6,7 +6,7 @@ extends Node2D
 onready var scene = load("res://scenes/student/student.tscn") # will load when parsing the script
 
 # Timer
-var can_go = true
+#onready var can_go = true
 onready var timer = get_node("Timer")
 
 func _ready():
@@ -16,25 +16,47 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	#print(global.can_go)
+	
 	# Move new student
-	if (can_go):
-		if (global.dialog_scene_counter > 0):
+	if (global.can_go):
+		if (global.next_student == true):
+			#if (global.dialog_scene_counter > 0):
 			var new_student = scene.instance()
 			get_parent().add_child(new_student)
-			can_go = false
+			global.can_go = false
 			timer.start()
+			
 
 
 	# Check if gameover 1
-	if (global.dialog_scene_counter > 4):
+	if (global.dialog_scene_counter > 2):
 		global.gameovercheck = true
 
 	# Check if gameover 2
 	if (global.gameovercheck):
 		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
 		queue_free()
+		
+	print("dialog_scene_counter ", global.dialog_scene_counter)
+	
+	
 
+func level_up():
+	global.level += 1
+	#print(global.level)
 
 # If time is out - next student can go
 func _on_Timer_timeout():
-	can_go = true
+	global.can_go = true
+	
+	if(global.ready_next_level(global.all_questions[global.level].keys())):
+		global.next_student = false
+		if(global.dialog_scene_counter == 0):
+			global.next_student = true
+			print ("Ready to go to the next level!")
+			level_up()
+		#else :
+			#global.gameovercheck = true
+		#	print("gameover?")
+	
