@@ -38,10 +38,7 @@ var level = 0
 
 var all_questions = [questions, questions_lvl2, questions_lvl3]
 
-#var level_questions = all_questions[level]
-
 var can_go = false
-
 
 func questions_last(qsts):
 	return qsts.size()
@@ -51,8 +48,6 @@ func ready_next_level(qsts):
 		return true
 	else:
 		return false
-		
-	
 
 func _ready():
 	# Called every time the node is added to the scene.

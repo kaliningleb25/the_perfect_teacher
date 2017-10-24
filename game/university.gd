@@ -12,23 +12,17 @@ onready var timer = get_node("Timer")
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-
 	set_process(true)
 
 func _process(delta):
-	#print(global.can_go)
-	
 	# Move new student
 	if (global.can_go):
 		if (global.next_student == true):
-			#if (global.dialog_scene_counter > 0):
 			var new_student = scene.instance()
 			get_parent().add_child(new_student)
 			global.can_go = false
 			timer.start()
 			
-
-
 	# Check if gameover 1
 	if (global.dialog_scene_counter > 2):
 		global.gameovercheck = true
@@ -44,7 +38,6 @@ func _process(delta):
 
 func level_up():
 	global.level += 1
-	#print(global.level)
 
 # If time is out - next student can go
 func _on_Timer_timeout():
@@ -56,7 +49,3 @@ func _on_Timer_timeout():
 			global.next_student = true
 			print ("Ready to go to the next level!")
 			level_up()
-		#else :
-			#global.gameovercheck = true
-		#	print("gameover?")
-	

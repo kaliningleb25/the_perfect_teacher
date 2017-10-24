@@ -7,19 +7,13 @@ const MOVEMENT_SPEED = 2
 # Dialog scene
 onready var dialog_scene = load("res://scenes/dialog/dialog.tscn") # will load when parsing the script
 
-
-
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-
-	
-	
 	set_process(true)
 
 func _process(delta):
 	# Move a student
-#	if (global.can_go):
 	set_pos(Vector2(get_pos().x + MOVEMENT_SPEED, get_pos().y))
 	# Check if student interacte with teacher(624.565674)
 	# If true - show dialog window

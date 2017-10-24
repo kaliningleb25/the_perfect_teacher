@@ -4,11 +4,7 @@ extends Control
 # Get a label_score node
 onready var score = get_node("label_score")
 
-
-
 func _ready():
-
-	
 	set_process(true)
 
 func _process(delta):
