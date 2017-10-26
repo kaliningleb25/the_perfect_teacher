@@ -40,6 +40,13 @@ var all_questions = [questions, questions_lvl2, questions_lvl3]
 
 var can_go = false
 
+var teacher_pos
+var teacher_size
+
+
+
+
+
 func questions_last(qsts):
 	return qsts.size()
 

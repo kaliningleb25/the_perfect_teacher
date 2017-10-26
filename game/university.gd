@@ -5,6 +5,9 @@ extends Node2D
 # Student scene
 onready var scene = load("res://scenes/student/student.tscn") # will load when parsing the script
 
+onready var teacher = get_node("teacher")
+#onready var teacher_pos = teacher.get_global_pos()
+
 # Timer
 #onready var can_go = true
 onready var timer = get_node("Timer")
@@ -12,6 +15,8 @@ onready var timer = get_node("Timer")
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	global.teacher_pos = teacher.get_global_pos().x
+	
 	set_process(true)
 
 func _process(delta):
@@ -31,8 +36,11 @@ func _process(delta):
 	if (global.gameovercheck):
 		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
 		queue_free()
-		
-	print("dialog_scene_counter ", global.dialog_scene_counter)
+	
+
+	
+
+
 	
 	
 
