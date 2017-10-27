@@ -14,10 +14,10 @@ var gameovercheck = false
 var next_student = true
 
 var questions = {
-"A cat has five legs" : 0,
-"People have two eyes" : 1,
-"A car can fly" : 0,
-"Lily has blue eyes" : 1
+"Вопрос: Когда необходимо составлять блок-схему программы?\nОтвет: до начала составления самой программы" : 1,
+"Вопрос: Наиболее наглядной формой описания алгоритма является структурно-стилизованный метод\nОтвет: язык программирования высокого уровня" : 0,
+"Вопрос: Перевод программ с языка высокого уровня на язык более низкого уровня обеспечивает...\nОтвет: компилятор" : 1#,
+#"Как" : 1
 }
 
 var questions_lvl2 = {
@@ -42,6 +42,8 @@ var can_go = false
 
 var teacher_pos
 var teacher_size
+
+var door_programming_pos
 
 
 
