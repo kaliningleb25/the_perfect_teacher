@@ -51,7 +51,7 @@ func level_up():
 func _on_Timer_timeout():
 	global.can_go = true
 	
-	if(global.ready_next_level(global.all_questions[global.level].keys())):
+	if(global.ready_next_level(global.questions_programming[global.programming_mode][global.level].keys())):
 		global.next_student = false
 		if(global.dialog_scene_counter == 0):
 			global.next_student = true

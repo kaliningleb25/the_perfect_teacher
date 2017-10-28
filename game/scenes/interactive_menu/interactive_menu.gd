@@ -6,7 +6,8 @@ extends Node2D
 var screen_size
 var door_programming_size
 
-onready var scene = load("res://scenes/main/university.tscn")
+#onready var scene = load("res://scenes/main/university.tscn")
+onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
 
 onready var door_programming = get_node("door_programming")
 
@@ -24,6 +25,7 @@ func _ready():
 
 func _process(delta):
 	var stud_pos = get_node("stud").get_pos()
+	var label = get_node("door_programming/label")
 	
 	var door_programming_rect = Rect2( get_node("door_programming").get_pos() - door_programming_size*0.5, door_programming_size )
 	
@@ -36,8 +38,8 @@ func _process(delta):
 	
 	if(door_programming_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
-		var new_game = scene.instance()
-		get_parent().add_child(new_game)
+		var new_interactive_menu_programming = scene.instance()
+		get_parent().add_child(new_interactive_menu_programming)
 		queue_free()
 		
 	

@@ -3,9 +3,9 @@ extends Control
 # MEMBER VARIABLES
 
 # get nodes for dialog
-onready var question = get_node("dialog/question")
-onready var b_correct = get_node("dialog/b_correct")
-onready var b_wrong = get_node("dialog/b_wrong")
+onready var question = get_node("paper/question")
+onready var b_correct = get_node("paper/b_correct")
+onready var b_wrong = get_node("paper/b_wrong")
 
 # Score scene
 onready var score_scene = load("res://scenes/score/score.tscn") # will load when parsing the script
@@ -25,15 +25,16 @@ onready var val
 # Get a random question
 func get_question():
 	randomize()
-	if (global.all_questions[global.level].keys().size() != 0):
-		rand_index = randi()%global.all_questions[global.level].keys().size()
+	var test = global.questions_programming[global.programming_mode][global.level]
+	if (test.size() != 0):
+		rand_index = randi()%test.keys().size()
 		
-		string = global.all_questions[global.level].keys()[rand_index]
+		string = test.keys()[rand_index]
 		
 		question.set_text(string)
 		q = string
-		val = global.all_questions[global.level][string]
-		global.all_questions[global.level].erase(string)
+		val = test[string]
+		test.erase(string)
 	else:
 		queue_free()
 	

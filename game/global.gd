@@ -13,30 +13,37 @@ var gameovercheck = false
 
 var next_student = true
 
-var questions = {
-"Вопрос: Когда необходимо составлять блок-схему программы?\nОтвет: до начала составления самой программы" : 1,
-"Вопрос: Наиболее наглядной формой описания алгоритма является структурно-стилизованный метод\nОтвет: язык программирования высокого уровня" : 0,
-"Вопрос: Перевод программ с языка высокого уровня на язык более низкого уровня обеспечивает...\nОтвет: компилятор" : 1#,
+# PROGRAMMING -> C
+var programming_c_questions = {
+"Вопрос: Когда необходимо составлять блок-схему программы?\n\nОтвет: до начала составления самой программы" : 1,
+"Вопрос: Наиболее наглядной формой описания алгоритма является структурно-стилизованный метод\n\nОтвет: язык программирования высокого уровня" : 0,
+"Вопрос: Перевод программ с языка высокого уровня на язык более низкого уровня обеспечивает...\n\nОтвет: компилятор" : 1#,
 #"Как" : 1
 }
 
-var questions_lvl2 = {
+var programming_c_questions_lvl2 = {
 "Test1" : 1,
 "Test2" : 1,
 "Test3" : 1,
 "Test4" : 1
 }
 
-var questions_lvl3 = {
+var programming_c_questions_lvl3 = {
 "SuperTest1" : 0,
 "SuperTest2" : 0,
 "SuperTest3" : 0,
 "SuperTest4" : 0
 }
 
-var level = 0
+var all_programming_c_questions = [programming_c_questions, programming_c_questions_lvl2, programming_c_questions_lvl3]
 
-var all_questions = [questions, questions_lvl2, questions_lvl3]
+# Array keeps questions for different types of programming
+var questions_programming = [all_programming_c_questions]
+
+# For choose type questions for programming (C(0), Java(1), etc.)
+var programming_mode
+
+var level = 0
 
 var can_go = false
 
@@ -44,6 +51,7 @@ var teacher_pos
 var teacher_size
 
 var door_programming_pos
+var door_c_pos
 
 
 
