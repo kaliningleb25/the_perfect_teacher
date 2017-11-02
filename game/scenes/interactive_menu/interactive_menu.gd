@@ -38,6 +38,7 @@ func _process(delta):
 	
 	if(door_programming_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
+		global.discipline_mode = 0
 		var new_interactive_menu_programming = scene.instance()
 		get_parent().add_child(new_interactive_menu_programming)
 		queue_free()

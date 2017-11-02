@@ -43,6 +43,11 @@ var questions_programming = [all_programming_c_questions]
 # For choose type questions for programming (C(0), Java(1), etc.)
 var programming_mode
 
+# For choose types for discipline(Programming, Math, etc.)
+var discipline_mode
+
+var discipline = [questions_programming]
+
 var level = 0
 
 var can_go = false
@@ -52,6 +57,8 @@ var teacher_size
 
 var door_programming_pos
 var door_c_pos
+
+var ekz_type
 
 
 

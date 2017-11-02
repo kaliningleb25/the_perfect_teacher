@@ -25,7 +25,7 @@ onready var val
 # Get a random question
 func get_question():
 	randomize()
-	var test = global.questions_programming[global.programming_mode][global.level]
+	var test = global.discipline[global.discipline_mode][global.programming_mode][global.level]#global.questions_programming[global.programming_mode][global.level]
 	if (test.size() != 0):
 		rand_index = randi()%test.keys().size()
 		
