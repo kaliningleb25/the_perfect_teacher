@@ -6,7 +6,8 @@ extends Node2D
 var screen_size
 var door_c_size
 
-onready var scene = load("res://scenes/main/university.tscn")
+#onready var scene = load("res://scenes/main/university.tscn")
+onready var scene = load("res://scenes/choose_level_and_mode/choose_level_and_mode.tscn")
 #onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
 
 onready var door_c = get_node("door_c")
@@ -42,4 +43,4 @@ func _process(delta):
 		global.ekz_type = "\"" + "C++" + "\""
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
-		queue_free()
+		#queue_free()

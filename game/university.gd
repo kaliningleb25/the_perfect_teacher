@@ -19,7 +19,7 @@ func _ready():
 	var type = get_node("background/type")
 	type.set_text(global.ekz_type)
 	
-	load_game()
+	#load_game()
 	
 	set_process(true)
 
@@ -55,14 +55,13 @@ func save():
 	save_file.store_line(str(global.level))
 	save_file.close()
 	
-func load_game():
-	var save_file = File.new()
-	if not save_file.file_exists("res://save.json"):
-		return
-	save_file.open("res://save.json", File.READ)
-	var lvl = save_file.get_as_text()
-	#print(lvl)
-	global.level = int(lvl)
+#func load_game():
+#	var save_file = File.new()
+#	if not save_file.file_exists("res://save.json"):
+#		return
+#	save_file.open("res://save.json", File.READ)
+#	var lvl = save_file.get_as_text()
+#	global.level = int(lvl)
 	
 	
 
