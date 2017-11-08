@@ -18,7 +18,7 @@ texture = ExtResource( 2 )
 transform/pos = Vector2( 267.081, 579.469 )
 texture = ExtResource( 3 )
 
-[node name="label" type="Label" parent="door_c"]
+[node name="label_c" type="Label" parent="door_c"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true

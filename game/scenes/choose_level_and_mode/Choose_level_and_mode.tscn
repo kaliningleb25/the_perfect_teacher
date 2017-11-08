@@ -52,7 +52,7 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 272.0
 margin/top = 206.0
-margin/right = 362.0
+margin/right = 365.0
 margin/bottom = 226.0
 toggle_mode = false
 enabled_focus_mode = 2
@@ -60,7 +60,7 @@ shortcut = null
 text = "go to lecture"
 flat = false
 
-[node name="TextureButton" type="TextureButton" parent="Panel"]
+[node name="btn_first_level" type="TextureButton" parent="Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -72,6 +72,7 @@ margin/right = 54.0
 margin/bottom = 54.0
 disabled = true
 toggle_mode = false
+click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
 textures/normal = ExtResource( 2 )
@@ -80,7 +81,7 @@ textures/focused = ExtResource( 4 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
-[node name="TextureButton1" type="TextureButton" parent="Panel"]
+[node name="btn_second_level" type="TextureButton" parent="Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -100,7 +101,7 @@ textures/focused = ExtResource( 4 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
-[node name="TextureButton2" type="TextureButton" parent="Panel"]
+[node name="btn_third_level" type="TextureButton" parent="Panel"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -116,9 +117,38 @@ enabled_focus_mode = 2
 shortcut = null
 textures/normal = ExtResource( 2 )
 textures/disabled = ExtResource( 3 )
+textures/focused = ExtResource( 4 )
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="btn_fourth_level" type="TextureButton" parent="Panel"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 121.0
+margin/top = 32.0
+margin/right = 142.0
+margin/bottom = 53.0
+disabled = true
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+textures/normal = ExtResource( 2 )
+textures/disabled = ExtResource( 3 )
+textures/focused = ExtResource( 4 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
 [connection signal="pressed" from="Panel/btn_start" to="." method="_on_btn_start_pressed"]
+
+[connection signal="pressed" from="Panel/btn_lecture" to="." method="_on_btn_lecture_pressed"]
+
+[connection signal="focus_enter" from="Panel/btn_first_level" to="." method="_on_first_level_focus_enter"]
+
+[connection signal="focus_enter" from="Panel/btn_second_level" to="." method="_on_btn_second_level_focus_enter"]
+
+[connection signal="focus_enter" from="Panel/btn_third_level" to="." method="_on_btn_third_level_focus_enter"]
 
 

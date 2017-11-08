@@ -25,7 +25,8 @@ onready var val
 # Get a random question
 func get_question():
 	randomize()
-	var test = global.discipline[global.discipline_mode][global.programming_mode][global.level]#global.questions_programming[global.programming_mode][global.level]
+	#if (global.discipline_mode == 0 and global.category_mode == 0):
+	var test = global.test_questions[global.c_level]#global.questions_programming[global.programming_mode][global.level]
 	if (test.size() != 0):
 		rand_index = randi()%test.keys().size()
 		
@@ -73,6 +74,7 @@ func _ready():
 	# Initialization here
 	get_question()
 	set_process(true)
+	get_node("paper/question").set_scroll_follow(true)
 
 func _process(delta):
 	check_answer()

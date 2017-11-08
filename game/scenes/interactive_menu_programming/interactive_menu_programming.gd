@@ -20,13 +20,14 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	global.door_c_pos = door_c.get_global_pos().x
 #	print(global.door_programming_pos)
+	if (global.discipline_mode == 0):
+		get_node("door_c/label_c").set_text("C++")
 	
 	door_c_size = get_node("door_c").get_texture().get_size()
 	set_process(true)
 
 func _process(delta):
 	var stud_pos = get_node("stud").get_pos()
-	var label = get_node("door_c/label")
 	
 	var door_c_rect = Rect2( get_node("door_c").get_pos() - door_c_size*0.5, door_c_size )
 	
@@ -39,7 +40,8 @@ func _process(delta):
 	
 	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
-		global.programming_mode = 0
+		global.level_mode = 0
+		global.category_mode = 0
 		global.ekz_type = "\"" + "C++" + "\""
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)

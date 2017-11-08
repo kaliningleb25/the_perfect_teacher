@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://scenes/lecture/lecture.gd" type="Script" id=1]
+[ext_resource path="res://book.png" type="Texture" id=2]
+[ext_resource path="res://Segoe.fnt" type="BitmapFont" id=3]
+
+[node name="Control" type="Control"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 40.0
+script/script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( 711.727, 369.273 )
+texture = ExtResource( 2 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Sprite"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -404.0
+margin/top = -269.0
+margin/right = -41.0
+margin/bottom = 270.0
+custom_fonts/normal_font = ExtResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
+bbcode/enabled = true
+bbcode/bbcode = ""
+visible_characters = -1
+percent_visible = 1.0
+
+

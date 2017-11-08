@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://university.gd" type="Script" id=1]
 [ext_resource path="res://scenes/main/body.png" type="Texture" id=2]
 [ext_resource path="res://scenes/main/head 1.png" type="Texture" id=3]
 [ext_resource path="res://scenes/main/back.png" type="Texture" id=4]
 [ext_resource path="res://SegoeBig.fnt" type="BitmapFont" id=5]
+[ext_resource path="res://Segoe.fnt" type="BitmapFont" id=6]
 
 [node name="Node2D" type="Node2D"]
 
@@ -58,6 +59,22 @@ margin/right = 673.0
 margin/bottom = 92.0
 custom_fonts/font = ExtResource( 5 )
 text = "Экзамен"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="name" type="Label" parent="background"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 509.0
+margin/top = 88.0
+margin/right = 888.0
+margin/bottom = 190.0
+custom_fonts/font = ExtResource( 6 )
+autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
