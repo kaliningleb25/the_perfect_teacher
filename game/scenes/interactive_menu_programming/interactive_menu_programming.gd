@@ -4,13 +4,15 @@ extends Node2D
 # var a = 2
 # var b = "textvar"
 var screen_size
-var door_c_size
+var door_size
+var doot_java_size
 
 #onready var scene = load("res://scenes/main/university.tscn")
 onready var scene = load("res://scenes/choose_level_and_mode/choose_level_and_mode.tscn")
 #onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
 
 onready var door_c = get_node("door_c")
+onready var door_java = get_node("door_java")
 
 
 
@@ -20,16 +22,21 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	global.door_c_pos = door_c.get_global_pos().x
 #	print(global.door_programming_pos)
-	if (global.discipline_mode == 0):
+	# Can refactor using .JSOM
+	if (global.discipline_mode == "programming"):
 		get_node("door_c/label_c").set_text("C++")
+		get_node("door_java/label_java").set_text("Java")
 	
-	door_c_size = get_node("door_c").get_texture().get_size()
+	
+	door_size = get_node("door_c").get_texture().get_size()
+	#door_java_size = door_java.get_texture().get_size()
 	set_process(true)
 
 func _process(delta):
 	var stud_pos = get_node("stud").get_pos()
 	
-	var door_c_rect = Rect2( get_node("door_c").get_pos() - door_c_size*0.5, door_c_size )
+	var door_c_rect = Rect2( get_node("door_c").get_pos() - door_size*0.5, door_size )
+	var door_java_rect = Rect2( get_node("door_java").get_pos() - door_size*0.5, door_size)
 	
 	# Move student left and right
 	if (stud_pos.x > 0 and Input.is_action_pressed("ui_left")):
@@ -41,8 +48,15 @@ func _process(delta):
 	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
 		global.level_mode = 0
-		global.category_mode = 0
+		global.category_mode = "c_plus_plus"
 		global.ekz_type = "\"" + "C++" + "\""
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
 		#queue_free()
+	if(door_java_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
+		print("ENTER THE DOOR!")
+		global.level_mode = 1
+		global.category_mode = "java"
+		global.ekz_type = "\"" + "Java" + "\""
+		var new_game = scene.instance()
+		get_parent().add_child(new_game)

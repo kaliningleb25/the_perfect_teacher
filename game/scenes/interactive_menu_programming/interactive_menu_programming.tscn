@@ -33,4 +33,24 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="door_java" type="Sprite" parent="."]
+
+transform/pos = Vector2( 549.782, 582.136 )
+texture = ExtResource( 3 )
+
+[node name="label_java" type="Label" parent="door_java"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -19.0
+margin/top = -68.0
+margin/right = 21.0
+margin/bottom = -54.0
+text = "C++"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 

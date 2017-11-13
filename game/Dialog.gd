@@ -26,7 +26,7 @@ onready var val
 func get_question():
 	randomize()
 	#if (global.discipline_mode == 0 and global.category_mode == 0):
-	var test = global.test_questions[global.c_level]#global.questions_programming[global.programming_mode][global.level]
+	var test = global.questions[global.discipline_mode][global.category_mode][global.c_lvl]#global.questions_programming[global.programming_mode][global.level]
 	if (test.size() != 0):
 		rand_index = randi()%test.keys().size()
 		

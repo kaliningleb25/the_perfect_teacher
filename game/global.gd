@@ -59,19 +59,27 @@ var all_programming_c_questions = [programming_c_questions, programming_c_questi
 # Array keeps questions for different types of programming
 var questions_programming = [all_programming_c_questions]
 
-# For choose type questions for programming (C(0), Java(1), etc.)
-var category_mode
 
+#------------------------------------------------------------
 # For choose types for discipline(Programming, Math, etc.)
 var discipline_mode
 
+# For choose type questions for programming (C(0), Java(1), etc.)
+var category_mode
+
+
+
+var c_lvl
+var java_lvl
+#------------------------------------------------------------
+
 var discipline = [questions_programming]
 
-var c_level = 0
-var java_level = 0
+
+
 var level = 0
 
-var levels = [c_level, java_level]
+#var levels = [c_level, java_level]
 var level_mode
 
 var can_go = false
@@ -86,8 +94,27 @@ var ekz_type
 
 var name_ekz
 
-var test_questions = {}
+var questions = {}
 
+var levels_and_names = {}
+
+var levels_types = {}
+var level_now
+
+
+#var programming = "programming"
+var programming = {}
+var math = {}
+#var disciplines = ["programming", "math"]
+var disciplines = { 
+		"programming" : ["c_plus_plus", "java"],
+		"math" : ["vectors"]
+	}
+
+var c_level
+var java_level
+
+var levels_arr = [c_level, java_level]
 
 
 func questions_last(qsts):
@@ -102,4 +129,6 @@ func ready_next_level(qsts):
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	pass
+	var questions_file = File.new()
+	questions_file.open("res://questions/qst.json", File.READ)
+	global.questions.parse_json(questions_file.get_as_text())

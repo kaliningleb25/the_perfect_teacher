@@ -22,6 +22,7 @@ func _ready():
 	print(global.discipline_mode)
 	print(global.category_mode)
 	load_questions_from_json_file()
+	print("global.level_now ", global.level_now)
 
 
 	
@@ -56,10 +57,53 @@ func _process(delta):
 
 	
 func save():
+	var dis_mode = global.discipline_mode
+	var cat_mode = global.category_mode
 	var save_file = File.new()
 	save_file.open("res://save.json", File.WRITE)
-	save_file.store_line(str(global.c_level)) #!!!!!!!!!!!!
-	save_file.store_line(str(global.java_level))
+	
+#	for dis in global.disciplines :
+#		var data = {
+#				dis : {
+#					cat_mode : global.level_now
+#				} 
+#		}
+#		save_file.store_line(data.to_json())
+	var data = {}
+		
+#	for i in range(0, global.levels_arr.size()) :
+#		data  = { global.levels_types.keys()[i] : global.levels_arr[i] }
+#		save_file.store_line(data.to_json())
+	save_file.store_line("{")
+	for i in range(0, global.levels_arr.size()) :
+		save_file.store_string("\"")
+		save_file.store_string(global.levels_types.keys()[i])
+		save_file.store_string("\"")
+		save_file.store_string(" : ")
+		if (global.category_mode == global.levels_types.keys()[i]) :
+			save_file.store_string(str(global.level_now))
+		else :
+			save_file.store_string(str(global.levels_arr[i]))
+		save_file.store_string(",\n")
+	save_file.store_line("}")
+		
+		
+	save_file.close()
+	
+
+
+	
+	
+	#data = global.level_now
+	
+
+#	save_file.store_line("{")
+#	save_file.store_line("    \"programming\" : {")
+#	save_file.store_line("        \"c_plus_plus\" : " + str(global.level_now))
+#	#save_file.store_line(str(global.c_level)) #!!!!!!!!!!!!
+#	save_file.store_line("    }")
+#	save_file.store_line("}")
+
 	save_file.close()
 	
 #func load_game():
@@ -73,9 +117,9 @@ func save():
 	
 
 func level_up():
-	if (global.discipline_mode == 0 and global.category_mode == 0):
-		global.c_level += 1
-		load_questions_from_json_file()
+	#if (global.discipline_mode == 0 and global.category_mode == 0):
+	global.level_now += 1
+	load_questions_from_json_file()
 		
 		
 
@@ -83,7 +127,7 @@ func level_up():
 func _on_Timer_timeout():
 	global.can_go = true
 	
-	if(global.ready_next_level(global.test_questions[global.c_level].keys())):
+	if(global.ready_next_level(global.questions[global.discipline_mode][global.category_mode][global.c_lvl].keys())):
 		global.next_student = false
 		if(global.dialog_scene_counter == 0):
 			global.next_student = true
@@ -92,33 +136,21 @@ func _on_Timer_timeout():
 
 
 func load_questions_from_json_file():
-		if (global.discipline_mode == 0 and global.category_mode == 0):
-			var questions_programming_c_file = File.new()
-			if (global.c_level == 0):
-				#28 вопросов:
-				questions_programming_c_file.open("res://questions/programming/c_plus_plus/lvl1.json", File.READ)
-				#global.programming_c_questions.parse_json(questions_programming_c_file.get_as_text())
-				global.test_questions.parse_json(questions_programming_c_file.get_as_text())
-				#print(global.test_questions["test"])
-				#global.programming_c_questions = global.test_questions["test"]
-				get_node("background/name").set_text("№1: Основы программирования, циклы (for, while, do while), оператор множественного выбора switch")
-			if (global.c_level == 1):
-				# 26 вопросов:
-				questions_programming_c_file.open("res://questions/programming/c_plus_plus/lvl2.json", File.READ)
-				global.programming_c_questions_lvl2.parse_json(questions_programming_c_file.get_as_text())
-				get_node("background/name").set_text("№2: Арифметические и логические операции, оператор выбора if, ввод/вывод, приведение типов данных")
-			if (global.c_level == 2):
-				# 28 вопросов:
-				questions_programming_c_file.open("res://questions/programming/c_plus_plus/lvl3.json", File.READ)
-				global.programming_c_questions_lvl3.parse_json(questions_programming_c_file.get_as_text())
-				get_node("background/name").set_text("№3: Строки, ссылки, указатели, массивы")
-			if (global.c_level == 3):
-				# 11 вопросов:
-				questions_programming_c_file.open("res://questions/programming/c_plus_plus/lvl4.json", File.READ)
-				global.programming_c_questions_lvl4.parse_json(questions_programming_c_file.get_as_text())
-				get_node("background/name").set_text("№4: Структуры и файлы")
-			
-				
+	# Read from .json information about level type (c_level, java_level etc.)
+	#var levels_types_file = File.new()
+	#levels_types_file.open("res://levels/levels_types.json", File.READ)
+	#global.levels_types.parse_json(levels_types_file.get_as_text())
+	#global.level_now = global.levels_types[global.discipline_mode][global.category_mode]
+	#print(global.level_now)
+
+	# Read from .jsom file about what the level is now and for set text name
+	var levels_and_names_file = File.new()
+	levels_and_names_file.open("res://levels/levels_and_names.json", File.READ)
+	global.levels_and_names.parse_json(levels_and_names_file.get_as_text())
+	#print(global.levels["0"])
+	global.c_lvl = global.levels_and_names["levels"][global.discipline_mode][global.category_mode][str(global.level_now)]
+	get_node("background/name").set_text(global.levels_and_names["names"][global.discipline_mode][global.category_mode][str(global.level_now)])
+	
 				
 
 func _on_Button_pressed():
