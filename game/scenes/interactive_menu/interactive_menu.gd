@@ -6,9 +6,7 @@ extends Node2D
 var screen_size
 var door_programming_size
 
-#onready var scene = load("res://scenes/main/university.tscn")
 onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
-
 onready var door_programming = get_node("door_programming")
 
 
@@ -17,8 +15,6 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	screen_size = get_viewport_rect().size
-	global.door_programming_pos = door_programming.get_global_pos().x
-	print(global.door_programming_pos)
 	
 	door_programming_size = get_node("door_programming").get_texture().get_size()
 	set_process(true)

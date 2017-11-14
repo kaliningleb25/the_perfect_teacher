@@ -20,16 +20,12 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	screen_size = get_viewport_rect().size
-	global.door_c_pos = door_c.get_global_pos().x
-#	print(global.door_programming_pos)
 	# Can refactor using .JSOM
 	if (global.discipline_mode == "programming"):
 		get_node("door_c/label_c").set_text("C++")
 		get_node("door_java/label_java").set_text("Java")
-	
-	
+		
 	door_size = get_node("door_c").get_texture().get_size()
-	#door_java_size = door_java.get_texture().get_size()
 	set_process(true)
 
 func _process(delta):
@@ -47,7 +43,6 @@ func _process(delta):
 	
 	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
-		global.level_mode = 0
 		global.category_mode = "c_plus_plus"
 		global.ekz_type = "\"" + "C++" + "\""
 		var new_game = scene.instance()
@@ -55,7 +50,6 @@ func _process(delta):
 		#queue_free()
 	if(door_java_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
-		global.level_mode = 1
 		global.category_mode = "java"
 		global.ekz_type = "\"" + "Java" + "\""
 		var new_game = scene.instance()

@@ -25,13 +25,10 @@ onready var val
 # Get a random question
 func get_question():
 	randomize()
-	#if (global.discipline_mode == 0 and global.category_mode == 0):
-	var test = global.questions[global.discipline_mode][global.category_mode][global.c_lvl]#global.questions_programming[global.programming_mode][global.level]
+	var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
 	if (test.size() != 0):
 		rand_index = randi()%test.keys().size()
-		
 		string = test.keys()[rand_index]
-		
 		question.set_text(string)
 		q = string
 		val = test[string]

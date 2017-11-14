@@ -4,19 +4,13 @@ extends Control
 # var a = 2
 # var b = "textvar"
 onready var scene = load("res://scenes/main/university.tscn")
-onready var scene_lecture = load("res://scenes/lecture/lecture.tscn")
-
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	set_process(true)
 	load_game()
-	print("!" + global.discipline_mode)
-	print("!" + global.category_mode)
-	print("!" + str(global.level_now))
 	
-	var full_circles = get_tree().get_nodes_in_group("full_circles")
 	if (global.level_now >= 0) :
 		get_node("Panel/btn_first_level").set_disabled(false)
 	if (global.level_now >= 1) :
@@ -25,34 +19,20 @@ func _ready():
 		get_node("Panel/btn_third_level").set_disabled(false)
 	if (global.level_now >= 3) :
 		get_node("Panel/btn_fourth_level").set_disabled(false)
-	print(self.get_script().get_path().get_base_dir())
 
-	
-		
-
-		
-
-	
-	
-	
-	
-	
 func load_game():
 	var save_file = File.new()
 	if not save_file.file_exists("res://save.json"):
 		return
 	save_file.open("res://save.json", File.READ)
 	global.levels_types.parse_json(save_file.get_as_text())
-	#global.level_now = global.levels_types[global.discipline_mode][global.category_mode]
+	# Get a opened levels from choosed category(1,2,3..n): 
 	global.level_now = global.levels_types[global.category_mode]
-	print("global.level_now ", global.level_now)
+	# Save all levels from each category to array:
 	for i in range(0,global.levels_arr.size()) :
 		global.levels_arr[i] = global.levels_types.values()[i]
-		
-	#print("this is level in global.levels_arr[1] ", global.levels_arr[1])
-	
 
-
+# Start game with selected category and level:
 func _on_btn_start_pressed():
 	var new_game = scene.instance()
 	get_parent().add_child(new_game)
@@ -62,21 +42,17 @@ func _on_btn_start_pressed():
 func _on_first_level_focus_enter():
 	global.level_now = 0
 
-
 func _on_btn_second_level_focus_enter():
 	global.level_now = 1
-
-
+	
 func _on_btn_third_level_focus_enter():
 	global.level_now = 2
 
-
+# Open lectures for selected category and level:
+# TODO : move all lectures to .json file
 func _on_btn_lecture_pressed():
 	var t = get_node("Panel/btn_first_level")
 
-
-	#var new_lecture = scene_lecture.instance()
-	#get_parent().add_child(new_lecture)
 	if(global.discipline_mode == "programming" and global.category_mode == "c_plus_plus"):
 		if (global.level_now == 0):
 			#OS.shell_open("//the_perfect_teacher/c_lecture_1.pdf")
