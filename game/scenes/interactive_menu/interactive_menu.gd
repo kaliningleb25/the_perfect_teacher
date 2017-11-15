@@ -21,7 +21,7 @@ func _ready():
 
 func _process(delta):
 	var stud_pos = get_node("stud").get_pos()
-	var label = get_node("door_programming/label")
+	var label = get_node("label")
 	
 	var door_programming_rect = Rect2( get_node("door_programming").get_pos() - door_programming_size*0.5, door_programming_size )
 	

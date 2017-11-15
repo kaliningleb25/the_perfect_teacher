@@ -34,38 +34,55 @@ func load_game():
 
 # Start game with selected category and level:
 func _on_btn_start_pressed():
-	var new_game = scene.instance()
-	get_parent().add_child(new_game)
-	queue_free()
+	if (global.check_focus):
+		var new_game = scene.instance()
+		get_parent().add_child(new_game)
+		queue_free()
+	else :
+		get_node("PopupDialog").show()
 
 
 func _on_first_level_focus_enter():
 	global.level_now = 0
+	global.check_focus = true
+	get_node("PopupDialog").hide()
 
 func _on_btn_second_level_focus_enter():
 	global.level_now = 1
+	global.check_focus = true
+	get_node("PopupDialog").hide()
 	
 func _on_btn_third_level_focus_enter():
 	global.level_now = 2
+	global.check_focus = true
+	get_node("PopupDialog").hide()
 	
 func _on_btn_fourth_level_focus_enter():
 	global.level_now = 3
+	global.check_focus = true
+	get_node("PopupDialog").hide()
 
 # Open lectures for selected category and level:
-# TODO : move all lectures to .json file
 func _on_btn_lecture_pressed():
-	var t = get_node("Panel/btn_first_level")
+	if(global.check_focus) :
+		var t = get_node("Panel/btn_first_level")
 
-	var lectures_file = File.new()
-	lectures_file.open("res://lectures/lectures.json", File.READ)
+		var lectures_file = File.new()
+		lectures_file.open("res://lectures/lectures.json", File.READ)
 	
-	var lectures = {}
+		var lectures = {}
 	
-	lectures.parse_json(lectures_file.get_as_text())
-	var lects = lectures[global.discipline_mode][global.category_mode][str(global.level_now)]
+		lectures.parse_json(lectures_file.get_as_text())
+		# Parse from .json file all lectures for selected discipline, category and level:
+		var lects = lectures[global.discipline_mode][global.category_mode][str(global.level_now)]
 
-	for i in range(0, lects.size()) :
-		OS.shell_open(lects[i])
+		# Open all lectures for selected discipline, category and level in browser:
+		for i in range(0, lects.size()) :
+			OS.shell_open(lects[i])
+	else :
+		get_node("PopupDialog").show()
+		
+	
 
 
 

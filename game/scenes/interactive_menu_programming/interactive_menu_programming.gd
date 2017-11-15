@@ -22,8 +22,8 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	# Can refactor using .JSOM
 	if (global.discipline_mode == "programming"):
-		get_node("door_c/label_c").set_text("C++")
-		get_node("door_java/label_java").set_text("Java")
+		get_node("label_c").set_text("C++")
+		get_node("label_java").set_text("Java")
 		
 	door_size = get_node("door_c").get_texture().get_size()
 	set_process(true)

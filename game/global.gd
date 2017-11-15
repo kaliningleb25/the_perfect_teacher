@@ -51,6 +51,8 @@ var java_level
 # Array for save game for each discipline and category
 var levels_arr = [c_level, java_level]
 
+var check_focus = false
+
 # Each time when question asked, it erase from dictionary. Function return size of dict
 func questions_last(qsts):
 	return qsts.size()

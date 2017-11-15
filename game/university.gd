@@ -17,6 +17,9 @@ func _ready():
 	var type = get_node("background/type")
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
+	
+	
+	
 
 	set_process(true)
 
@@ -29,6 +32,9 @@ func _process(delta):
 			global.can_go = false
 			timer.start()
 			
+	
+			
+	
 	# Check if gameover 1
 	if (global.dialog_scene_counter > 2):
 		global.gameovercheck = true
@@ -37,6 +43,11 @@ func _process(delta):
 	if (global.gameovercheck):
 		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
 		queue_free()
+		
+	
+		
+
+
 	
 func save():
 	var save_file = File.new()
@@ -63,6 +74,9 @@ func level_up():
 # If time is out - next student can go
 func _on_Timer_timeout():
 	global.can_go = true
+	get_node("background/closed_door").hide()
+	get_node("background/opened_door").show()
+	
 	
 	if(global.ready_next_level(global.questions[global.discipline_mode][global.category_mode][global.lvl].keys())):
 		global.next_student = false
@@ -82,3 +96,10 @@ func load_questions_from_json_file():
 
 func _on_Button_pressed():
 	save()
+
+# TODO : mute sounds/ unmute sounds
+func _on_bell_toggled( pressed ):
+	if (pressed):
+		print("pressed")
+	else :
+		get_node("background/bell").release_focus()

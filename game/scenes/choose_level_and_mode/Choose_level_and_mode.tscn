@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://scenes/choose_level_and_mode/Choose_level_and_mode.gd" type="Script" id=1]
-[ext_resource path="res://scenes/choose_level_and_mode/full_circle.png" type="Texture" id=2]
-[ext_resource path="res://scenes/choose_level_and_mode/empty_circle.png" type="Texture" id=3]
-[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://fonts/google_noto_mono.fnt" type="BitmapFont" id=2]
+[ext_resource path="res://art/choose_level_and_mode/circle.png" type="Texture" id=3]
+[ext_resource path="res://art/choose_level_and_mode/circle_disabled.png" type="Texture" id=4]
+[ext_resource path="res://art/choose_level_and_mode/circle_focused.png" type="Texture" id=5]
 
 [node name="Control" type="Control"]
 
@@ -36,28 +37,32 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 49.0
 margin/top = 203.0
-margin/right = 139.0
-margin/bottom = 223.0
+margin/right = 171.0
+margin/bottom = 226.0
+custom_fonts/font = ExtResource( 2 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "start"
+text = "Начать игру"
 flat = false
 
 [node name="btn_lecture" type="Button" parent="Panel"]
 
+hint/tooltip = "Внимание!!
+"
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 272.0
-margin/top = 206.0
-margin/right = 365.0
-margin/bottom = 226.0
+margin/left = 207.0
+margin/top = 203.0
+margin/right = 403.0
+margin/bottom = 227.0
+custom_fonts/font = ExtResource( 2 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-text = "go to lecture"
+text = "Перейти к лекции"
 flat = false
 
 [node name="btn_first_level" type="TextureButton" parent="Panel"]
@@ -68,16 +73,16 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 33.0
 margin/top = 33.0
-margin/right = 54.0
-margin/bottom = 54.0
+margin/right = 93.0
+margin/bottom = 96.0
 disabled = true
 toggle_mode = false
 click_on_press = true
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 2 )
-textures/disabled = ExtResource( 3 )
-textures/focused = ExtResource( 4 )
+textures/normal = ExtResource( 3 )
+textures/disabled = ExtResource( 4 )
+textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
@@ -87,17 +92,17 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 64.0
-margin/top = 33.0
-margin/right = 85.0
-margin/bottom = 54.0
+margin/left = 107.0
+margin/top = 31.0
+margin/right = 167.0
+margin/bottom = 94.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 2 )
-textures/disabled = ExtResource( 3 )
-textures/focused = ExtResource( 4 )
+textures/normal = ExtResource( 3 )
+textures/disabled = ExtResource( 4 )
+textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
@@ -107,17 +112,17 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 94.0
-margin/top = 33.0
-margin/right = 115.0
-margin/bottom = 54.0
+margin/left = 179.0
+margin/top = 32.0
+margin/right = 239.0
+margin/bottom = 95.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 2 )
-textures/disabled = ExtResource( 3 )
-textures/focused = ExtResource( 4 )
+textures/normal = ExtResource( 3 )
+textures/disabled = ExtResource( 4 )
+textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
@@ -127,19 +132,48 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 121.0
-margin/top = 32.0
-margin/right = 142.0
-margin/bottom = 53.0
+margin/left = 250.0
+margin/top = 34.0
+margin/right = 312.0
+margin/bottom = 97.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 2 )
-textures/disabled = ExtResource( 3 )
-textures/focused = ExtResource( 4 )
+textures/normal = ExtResource( 3 )
+textures/disabled = ExtResource( 4 )
+textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
+
+[node name="PopupDialog" type="PopupDialog" parent="."]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 533.0
+margin/top = 68.0
+margin/right = 724.0
+margin/bottom = 144.0
+popup/exclusive = false
+
+[node name="Label" type="Label" parent="PopupDialog"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 17.0
+margin/top = 23.0
+margin/right = 177.0
+margin/bottom = 60.0
+custom_fonts/font = ExtResource( 2 )
+text = "Пожалуйста, 
+выберите уровень"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [connection signal="pressed" from="Panel/btn_start" to="." method="_on_btn_start_pressed"]
 
