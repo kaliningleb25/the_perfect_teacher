@@ -151,4 +151,6 @@ params/stretch_mode = 0
 
 [connection signal="focus_enter" from="Panel/btn_third_level" to="." method="_on_btn_third_level_focus_enter"]
 
+[connection signal="focus_enter" from="Panel/btn_fourth_level" to="." method="_on_btn_fourth_level_focus_enter"]
+
 

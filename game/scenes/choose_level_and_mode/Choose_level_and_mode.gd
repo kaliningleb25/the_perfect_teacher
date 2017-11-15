@@ -47,36 +47,28 @@ func _on_btn_second_level_focus_enter():
 	
 func _on_btn_third_level_focus_enter():
 	global.level_now = 2
+	
+func _on_btn_fourth_level_focus_enter():
+	global.level_now = 3
 
 # Open lectures for selected category and level:
 # TODO : move all lectures to .json file
 func _on_btn_lecture_pressed():
 	var t = get_node("Panel/btn_first_level")
 
-	if(global.discipline_mode == "programming" and global.category_mode == "c_plus_plus"):
-		if (global.level_now == 0):
-			#OS.shell_open("//the_perfect_teacher/c_lecture_1.pdf")
-			OS.shell_open("http://cppstudio.com/post/1984/")
-			OS.shell_open("http://cppstudio.com/post/1980/")
-			OS.shell_open("http://cppstudio.com/post/348/")
-			OS.shell_open("http://cppstudio.com/post/352/")
-			OS.shell_open("http://cppstudio.com/post/361/")
-			OS.shell_open("http://cppstudio.com/post/306/")
-		if (global.level_now == 1):
-			OS.shell_open("http://cppstudio.com/post/213/")
-			OS.shell_open("http://cppstudio.com/post/259/")
-			OS.shell_open("http://cppstudio.com/post/297/")
-			OS.shell_open("http://cppstudio.com/post/286/")
-			OS.shell_open("http://cppstudio.com/post/279/")
-			OS.shell_open("http://cppstudio.com/post/310/")
-		if (global.level_now == 2):
-			OS.shell_open("http://cppstudio.com/post/437/")
-			OS.shell_open("http://cppstudio.com/post/429/")
-			OS.shell_open("http://cppstudio.com/post/423/")
-			OS.shell_open("http://cppstudio.com/post/389//")
-		if (global.level_now == 3):
-			OS.shell_open("http://cppstudio.com/post/446/")
-			
+	var lectures_file = File.new()
+	lectures_file.open("res://lectures/lectures.json", File.READ)
+	
+	var lectures = {}
+	
+	lectures.parse_json(lectures_file.get_as_text())
+	var lects = lectures[global.discipline_mode][global.category_mode][str(global.level_now)]
+
+	for i in range(0, lects.size()) :
+		OS.shell_open(lects[i])
+
+
+
 
 
 
