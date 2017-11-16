@@ -41,15 +41,17 @@ func get_question():
 func answer():
 	if (b_correct.is_pressed()):
 		check = 1
+		global.question_answered = true
 		if (global.dialog_scene_counter > 0):
 			global.dialog_scene_counter -= 1
 		queue_free()
 	elif (b_wrong.is_pressed()):
 		check = 0
+		global.question_answered = true
 		if (global.dialog_scene_counter > 0):
 			global.dialog_scene_counter -= 1
 		queue_free()
-
+	
 	return check
 
 # "CORRECT" or "WRONG" answer
@@ -72,6 +74,8 @@ func _ready():
 	get_question()
 	set_process(true)
 	get_node("paper/question").set_scroll_follow(true)
+	global.student_reach_teacher = true
+	global.question_answered = false
 	
 
 func _process(delta):

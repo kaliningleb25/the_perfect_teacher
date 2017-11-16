@@ -57,6 +57,10 @@ var index_of_level
 
 var check_focus = false
 
+var student_reach_teacher = false
+
+var question_answered = false
+
 # 0 = programming
 var check_return
 

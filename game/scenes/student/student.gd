@@ -22,6 +22,7 @@ func _process(delta):
 		var new_dialog = dialog_scene.instance()
 		get_parent().add_child(new_dialog)
 		global.dialog_scene_counter += 1
+		
 
 	# Check if student is out of screen or destinate a teacher
 	if ((get_pos().x > OS.get_window_size().x) or (get_pos().x >= global.teacher_pos)):

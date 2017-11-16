@@ -1,40 +1,32 @@
-[gd_scene load_steps=17 format=1]
+[gd_scene load_steps=24 format=1]
 
 [ext_resource path="res://university.gd" type="Script" id=1]
-[ext_resource path="res://scenes/main/body.png" type="Texture" id=2]
-[ext_resource path="res://scenes/main/head 1.png" type="Texture" id=3]
-[ext_resource path="res://art/main/lecture hall 1.png" type="Texture" id=4]
-[ext_resource path="res://SegoeBig.fnt" type="BitmapFont" id=5]
-[ext_resource path="res://Segoe.fnt" type="BitmapFont" id=6]
-[ext_resource path="res://art/main/door 1 2.png" type="Texture" id=7]
-[ext_resource path="res://art/main/bell4.png" type="Texture" id=8]
-[ext_resource path="res://art/main/bell4_off.png" type="Texture" id=9]
-[ext_resource path="res://art/main/door_1.png" type="Texture" id=10]
-[ext_resource path="res://art/main/door_1_hovered.png" type="Texture" id=11]
-[ext_resource path="res://fonts/google_noto_mono.fnt" type="BitmapFont" id=12]
-[ext_resource path="res://art/dialog/yes.png" type="Texture" id=13]
-[ext_resource path="res://art/dialog/yes_hovered.png" type="Texture" id=14]
-[ext_resource path="res://art/dialog/no.png" type="Texture" id=15]
-[ext_resource path="res://art/dialog/no_hovered.png" type="Texture" id=16]
+[ext_resource path="res://art/main/lecture hall 1.png" type="Texture" id=2]
+[ext_resource path="res://SegoeBig.fnt" type="BitmapFont" id=3]
+[ext_resource path="res://Segoe.fnt" type="BitmapFont" id=4]
+[ext_resource path="res://art/main/door 1 2.png" type="Texture" id=5]
+[ext_resource path="res://art/main/bell4.png" type="Texture" id=6]
+[ext_resource path="res://art/main/bell4_off.png" type="Texture" id=7]
+[ext_resource path="res://art/main/door_1.png" type="Texture" id=8]
+[ext_resource path="res://art/main/door_1_hovered.png" type="Texture" id=9]
+[ext_resource path="res://fonts/google_noto_mono.fnt" type="BitmapFont" id=10]
+[ext_resource path="res://art/dialog/yes.png" type="Texture" id=11]
+[ext_resource path="res://art/dialog/yes_hovered.png" type="Texture" id=12]
+[ext_resource path="res://art/dialog/no.png" type="Texture" id=13]
+[ext_resource path="res://art/dialog/no_hovered.png" type="Texture" id=14]
+[ext_resource path="res://art/main/teacher/professor_body.png" type="Texture" id=15]
+[ext_resource path="res://art/main/teacher/professor_head.png" type="Texture" id=16]
+[ext_resource path="res://art/main/teacher/professor_eye1.png" type="Texture" id=17]
+[ext_resource path="res://art/main/teacher/professor_eye_closed.png" type="Texture" id=18]
+[ext_resource path="res://art/main/teacher/professor_eye2.png" type="Texture" id=19]
+[ext_resource path="res://art/main/teacher/professor_eyebrow.png" type="Texture" id=20]
+[ext_resource path="res://art/main/teacher/professor_eyebrow2.png" type="Texture" id=21]
+[ext_resource path="res://scenes/main/teacher_read.tres" type="Animation" id=22]
+[ext_resource path="res://scenes/main/teacher_close_eyes.tres" type="Animation" id=23]
 
 [node name="Node2D" type="Node2D"]
 
 script/script = ExtResource( 1 )
-
-[node name="teacher" type="Sprite" parent="." groups=[
-"persistant",
-]]
-
-transform/pos = Vector2( 700.902, 313.36 )
-transform/scale = Vector2( 0.187534, 0.182726 )
-texture = ExtResource( 2 )
-
-[node name="student1" parent="teacher" instance_placeholder="res://scenes/student/student.tscn"]
-
-[node name="head" type="Sprite" parent="teacher"]
-
-transform/pos = Vector2( 0.298828, -550.675 )
-texture = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -54,7 +46,7 @@ margin/left = 1.0
 margin/top = -1.0
 margin/right = 1369.0
 margin/bottom = 767.0
-texture = ExtResource( 4 )
+texture = ExtResource( 2 )
 stretch_mode = 0
 
 [node name="ekz" type="Label" parent="background"]
@@ -67,7 +59,7 @@ margin/left = 531.0
 margin/top = 47.0
 margin/right = 673.0
 margin/bottom = 92.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 text = "Экзамен"
 percent_visible = 1.0
 lines_skipped = 0
@@ -83,7 +75,7 @@ margin/left = 509.0
 margin/top = 88.0
 margin/right = 868.0
 margin/bottom = 190.0
-custom_fonts/font = ExtResource( 6 )
+custom_fonts/font = ExtResource( 4 )
 autowrap = true
 percent_visible = 1.0
 lines_skipped = 0
@@ -99,7 +91,7 @@ margin/left = 680.0
 margin/top = 41.0
 margin/right = 771.0
 margin/bottom = 86.0
-custom_fonts/font = ExtResource( 5 )
+custom_fonts/font = ExtResource( 3 )
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -123,7 +115,7 @@ flat = false
 
 transform/pos = Vector2( 2.75168, 215.317 )
 transform/scale = Vector2( 0.175816, 0.175816 )
-texture = ExtResource( 7 )
+texture = ExtResource( 5 )
 
 [node name="bell" type="TextureButton" parent="background"]
 
@@ -138,13 +130,14 @@ margin/bottom = 110.0
 toggle_mode = true
 enabled_focus_mode = 1
 shortcut = null
-textures/normal = ExtResource( 8 )
-textures/focused = ExtResource( 9 )
+textures/normal = ExtResource( 6 )
+textures/focused = ExtResource( 7 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
 [node name="opened_door" type="TextureButton" parent="background"]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -156,8 +149,8 @@ margin/bottom = 366.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 10 )
-textures/hover = ExtResource( 11 )
+textures/normal = ExtResource( 8 )
+textures/hover = ExtResource( 9 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
@@ -172,7 +165,7 @@ margin/left = 515.0
 margin/top = 26.0
 margin/right = 868.0
 margin/bottom = 183.0
-custom_fonts/title_font = ExtResource( 12 )
+custom_fonts/title_font = ExtResource( 10 )
 popup/exclusive = false
 window/title = "Выход"
 
@@ -186,7 +179,7 @@ margin/left = 15.0
 margin/top = 14.0
 margin/right = 336.0
 margin/bottom = 74.0
-custom_fonts/font = ExtResource( 12 )
+custom_fonts/font = ExtResource( 10 )
 text = "Вы уверены, что хотите выйти в коридор? (Игра будет сохранена автоматически)
 "
 autowrap = true
@@ -207,8 +200,8 @@ margin/bottom = 131.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 13 )
-textures/hover = ExtResource( 14 )
+textures/normal = ExtResource( 11 )
+textures/hover = ExtResource( 12 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
@@ -225,10 +218,85 @@ margin/bottom = 136.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
-textures/normal = ExtResource( 15 )
-textures/hover = ExtResource( 16 )
+textures/normal = ExtResource( 13 )
+textures/hover = ExtResource( 14 )
 params/resize_mode = 0
 params/stretch_mode = 0
+
+[node name="teacher" type="Sprite" parent="background"]
+
+transform/pos = Vector2( 682.201, 312.525 )
+transform/scale = Vector2( 0.12162, 0.12162 )
+texture = ExtResource( 15 )
+
+[node name="head" type="Sprite" parent="background/teacher"]
+
+transform/pos = Vector2( 12.1909, -912.157 )
+transform/scale = Vector2( 0.929834, 0.929834 )
+texture = ExtResource( 16 )
+
+[node name="left_eye" type="Sprite" parent="background/teacher/head"]
+
+transform/pos = Vector2( -211.124, 101.987 )
+texture = ExtResource( 17 )
+
+[node name="left_eye_closed" type="Sprite" parent="background/teacher/head/left_eye"]
+
+visibility/visible = false
+transform/pos = Vector2( -0.709855, 2.40868 )
+transform/scale = Vector2( 1.26358, 1.2743 )
+texture = ExtResource( 18 )
+
+[node name="right_eye" type="Sprite" parent="background/teacher/head"]
+
+transform/pos = Vector2( 215.767, 102.663 )
+texture = ExtResource( 19 )
+
+[node name="right_eye_closed" type="Sprite" parent="background/teacher/head/right_eye"]
+
+visibility/visible = false
+transform/pos = Vector2( -0.595215, 4.52356 )
+transform/scale = Vector2( 1.26358, 1.2743 )
+texture = ExtResource( 18 )
+
+[node name="left_eyebrow" type="Sprite" parent="background/teacher/head"]
+
+transform/pos = Vector2( -219.583, 17.7084 )
+texture = ExtResource( 20 )
+
+[node name="right_eyebrow" type="Sprite" parent="background/teacher/head"]
+
+transform/pos = Vector2( 221.355, 17.7083 )
+texture = ExtResource( 21 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/teacher_read = ExtResource( 22 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="timer_teacher_eyes" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[node name="AnimationPlayer_teacher_eyes" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/teacher_close_eyes = ExtResource( 23 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
@@ -241,5 +309,7 @@ params/stretch_mode = 0
 [connection signal="button_down" from="background/ExitDialog/yes" to="." method="_on_yes_button_down"]
 
 [connection signal="button_down" from="background/ExitDialog/no" to="." method="_on_no_button_down"]
+
+[connection signal="timeout" from="timer_teacher_eyes" to="." method="_on_timer_teacher_eyes_timeout"]
 
 

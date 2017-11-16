@@ -6,10 +6,12 @@ extends Node2D
 onready var scene = load("res://scenes/student/student.tscn") # will load when parsing the script
 onready var exit_to_corridor_scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn") # exit to corridot
 
-onready var teacher = get_node("teacher")
+onready var teacher = get_node("background/teacher")
 
 # Timer
 onready var timer = get_node("Timer")
+
+onready var time_to_wait = randf()*3+1
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -19,12 +21,21 @@ func _ready():
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
 	
+
 	
 	
 
 	set_process(true)
 
 func _process(delta):
+	print(time_to_wait)
+	
+	if (global.student_reach_teacher == true):
+		get_node("AnimationPlayer").play("teacher_read")
+		global.student_reach_teacher = false
+	if (global.question_answered == true):
+		get_node("AnimationPlayer").seek(0, true)
+		global.question_answered == false
 	# Move new student
 	if (global.can_go):
 		if (global.next_student == true):
@@ -33,7 +44,6 @@ func _process(delta):
 			global.can_go = false
 			timer.start()
 			
-	
 			
 	
 	# Check if gameover 1
@@ -45,6 +55,7 @@ func _process(delta):
 		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
 		queue_free()
 		
+
 	
 		
 
@@ -78,6 +89,9 @@ func _on_Timer_timeout():
 	get_node("background/closed_door").hide()
 	get_node("background/opened_door").show()
 	
+
+	get_node("timer_teacher_eyes").set_wait_time(time_to_wait)
+	get_node("timer_teacher_eyes").start()
 	
 	if(global.ready_next_level(global.questions[global.discipline_mode][global.category_mode][global.lvl].keys())):
 		global.next_student = false
@@ -122,3 +136,11 @@ func _on_yes_button_down():
 	var confirm_quit = exit_to_corridor_scene.instance()
 	get_parent().add_child(confirm_quit)
 	queue_free()
+
+func _on_timer_teacher_eyes_timeout():
+	 # replace with function body
+	time_to_wait = randf()*3+1
+	
+	get_node("AnimationPlayer_teacher_eyes").play("teacher_close_eyes")
+	get_node("AnimationPlayer_teacher_eyes").seek(0, true)
+	#get_node("AnimationPlayer").seek(0, false)
