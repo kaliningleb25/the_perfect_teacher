@@ -72,6 +72,7 @@ func _ready():
 	get_question()
 	set_process(true)
 	get_node("paper/question").set_scroll_follow(true)
+	
 
 func _process(delta):
 	check_answer()

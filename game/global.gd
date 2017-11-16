@@ -51,7 +51,14 @@ var java_level
 # Array for save game for each discipline and category
 var levels_arr = [c_level, java_level]
 
+# 0 = c_level, 1 = java_level
+# TODO: WARNING! CHANGE THIS WHEN ADD NEW DISCIPLINE
+var index_of_level
+
 var check_focus = false
+
+# 0 = programming
+var check_return
 
 # Each time when question asked, it erase from dictionary. Function return size of dict
 func questions_last(qsts):

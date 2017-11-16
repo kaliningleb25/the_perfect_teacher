@@ -5,7 +5,7 @@
 
 [node name="student1" type="Sprite"]
 
-transform/pos = Vector2( 37.3676, 319.055 )
+transform/pos = Vector2( 304.285, 154.591 )
 texture = ExtResource( 1 )
 script/script = ExtResource( 2 )
 

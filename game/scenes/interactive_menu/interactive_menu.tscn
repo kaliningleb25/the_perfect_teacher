@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/interactive_menu/interactive_menu.gd" type="Script" id=1]
 [ext_resource path="res://art/interactive_menu/corridor.png" type="Texture" id=2]
-[ext_resource path="res://art/interactive_menu/door 1.png" type="Texture" id=3]
+[ext_resource path="res://art/interactive_menu/door_1.png" type="Texture" id=3]
 [ext_resource path="res://scenes/main/student2.png" type="Texture" id=4]
 
 [node name="Node2D" type="Node2D"]

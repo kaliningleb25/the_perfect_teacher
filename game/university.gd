@@ -4,6 +4,7 @@ extends Node2D
 
 # Student scene
 onready var scene = load("res://scenes/student/student.tscn") # will load when parsing the script
+onready var exit_to_corridor_scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn") # exit to corridot
 
 onready var teacher = get_node("teacher")
 
@@ -97,9 +98,27 @@ func load_questions_from_json_file():
 func _on_Button_pressed():
 	save()
 
-# TODO : mute sounds/ unmute sounds
+# TODO :
+# 1) make hovered textures 
+# 2) mute sounds/ unmute sounds
 func _on_bell_toggled( pressed ):
 	if (pressed):
 		print("pressed")
 	else :
 		get_node("background/bell").release_focus()
+
+
+func _on_opened_door_button_down():
+	get_node("background/ExitDialog").show()
+
+
+func _on_no_button_down():
+	 get_node("background/ExitDialog").hide()
+
+
+func _on_yes_button_down():
+	if (global.level_now > global.levels_arr[global.index_of_level]) :
+		save()
+	var confirm_quit = exit_to_corridor_scene.instance()
+	get_parent().add_child(confirm_quit)
+	queue_free()

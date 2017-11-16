@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=17 format=1]
 
 [ext_resource path="res://university.gd" type="Script" id=1]
 [ext_resource path="res://scenes/main/body.png" type="Texture" id=2]
@@ -7,9 +7,15 @@
 [ext_resource path="res://SegoeBig.fnt" type="BitmapFont" id=5]
 [ext_resource path="res://Segoe.fnt" type="BitmapFont" id=6]
 [ext_resource path="res://art/main/door 1 2.png" type="Texture" id=7]
-[ext_resource path="res://art/interactive_menu/door 1.png" type="Texture" id=8]
-[ext_resource path="res://art/main/bell4.png" type="Texture" id=9]
-[ext_resource path="res://art/main/bell4_off.png" type="Texture" id=10]
+[ext_resource path="res://art/main/bell4.png" type="Texture" id=8]
+[ext_resource path="res://art/main/bell4_off.png" type="Texture" id=9]
+[ext_resource path="res://art/main/door_1.png" type="Texture" id=10]
+[ext_resource path="res://art/main/door_1_hovered.png" type="Texture" id=11]
+[ext_resource path="res://fonts/google_noto_mono.fnt" type="BitmapFont" id=12]
+[ext_resource path="res://art/dialog/yes.png" type="Texture" id=13]
+[ext_resource path="res://art/dialog/yes_hovered.png" type="Texture" id=14]
+[ext_resource path="res://art/dialog/no.png" type="Texture" id=15]
+[ext_resource path="res://art/dialog/no_hovered.png" type="Texture" id=16]
 
 [node name="Node2D" type="Node2D"]
 
@@ -115,16 +121,9 @@ flat = false
 
 [node name="closed_door" type="Sprite" parent="background"]
 
-transform/pos = Vector2( -2.59847, 215.299 )
-transform/scale = Vector2( 0.182665, 0.182665 )
+transform/pos = Vector2( 2.75168, 215.317 )
+transform/scale = Vector2( 0.175816, 0.175816 )
 texture = ExtResource( 7 )
-
-[node name="opened_door" type="Sprite" parent="background"]
-
-visibility/visible = false
-transform/pos = Vector2( 83.1132, 215.184 )
-transform/scale = Vector2( 1.0409, 1.0409 )
-texture = ExtResource( 8 )
 
 [node name="bell" type="TextureButton" parent="background"]
 
@@ -139,8 +138,95 @@ margin/bottom = 110.0
 toggle_mode = true
 enabled_focus_mode = 1
 shortcut = null
-textures/normal = ExtResource( 9 )
-textures/focused = ExtResource( 10 )
+textures/normal = ExtResource( 8 )
+textures/focused = ExtResource( 9 )
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="opened_door" type="TextureButton" parent="background"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -1.0
+margin/top = 62.0
+margin/right = 158.0
+margin/bottom = 366.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+textures/normal = ExtResource( 10 )
+textures/hover = ExtResource( 11 )
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="ExitDialog" type="WindowDialog" parent="background"]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 515.0
+margin/top = 26.0
+margin/right = 868.0
+margin/bottom = 183.0
+custom_fonts/title_font = ExtResource( 12 )
+popup/exclusive = false
+window/title = "Выход"
+
+[node name="Label" type="Label" parent="background/ExitDialog"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 15.0
+margin/top = 14.0
+margin/right = 336.0
+margin/bottom = 74.0
+custom_fonts/font = ExtResource( 12 )
+text = "Вы уверены, что хотите выйти в коридор? (Игра будет сохранена автоматически)
+"
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="yes" type="TextureButton" parent="background/ExitDialog"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 39.0
+margin/top = 72.0
+margin/right = 99.0
+margin/bottom = 131.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+textures/normal = ExtResource( 13 )
+textures/hover = ExtResource( 14 )
+params/resize_mode = 0
+params/stretch_mode = 0
+
+[node name="no" type="TextureButton" parent="background/ExitDialog"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 235.0
+margin/top = 72.0
+margin/right = 295.0
+margin/bottom = 136.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+textures/normal = ExtResource( 15 )
+textures/hover = ExtResource( 16 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
@@ -149,5 +235,11 @@ params/stretch_mode = 0
 [connection signal="pressed" from="background/Button" to="." method="_on_Button_pressed"]
 
 [connection signal="toggled" from="background/bell" to="." method="_on_bell_toggled"]
+
+[connection signal="button_down" from="background/opened_door" to="." method="_on_opened_door_button_down"]
+
+[connection signal="button_down" from="background/ExitDialog/yes" to="." method="_on_yes_button_down"]
+
+[connection signal="button_down" from="background/ExitDialog/no" to="." method="_on_no_button_down"]
 
 

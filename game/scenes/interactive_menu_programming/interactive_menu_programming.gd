@@ -9,7 +9,7 @@ var doot_java_size
 
 #onready var scene = load("res://scenes/main/university.tscn")
 onready var scene = load("res://scenes/choose_level_and_mode/choose_level_and_mode.tscn")
-#onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
+onready var exit_to_previous_corridor_scene = load("res://scenes/interactive_menu/interactive_menu.tscn") # Back to previous corridor
 
 onready var door_c = get_node("door_c")
 onready var door_java = get_node("door_java")
@@ -45,6 +45,7 @@ func _process(delta):
 		print("ENTER THE DOOR!")
 		global.category_mode = "c_plus_plus"
 		global.ekz_type = "\"" + "C++" + "\""
+		global.index_of_level = 0
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
 		#queue_free()
@@ -52,5 +53,12 @@ func _process(delta):
 		print("ENTER THE DOOR!")
 		global.category_mode = "java"
 		global.ekz_type = "\"" + "Java" + "\""
+		global.index_of_level = 1
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
+		
+	if(stud_pos.x < 0): 
+		var exit_to_prev_cor = exit_to_previous_corridor_scene.instance()
+		get_parent().add_child(exit_to_prev_cor)
+		global.check_return = 0
+		queue_free()
