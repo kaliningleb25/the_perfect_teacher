@@ -4,6 +4,7 @@ extends Node2D
 
 # Student scene
 onready var scene = load("res://scenes/student/student.tscn") # will load when parsing the script
+onready var animated_student_scene = load("res://scenes/student/animated_student.tscn")
 onready var exit_to_corridor_scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn") # exit to corridot
 
 onready var teacher = get_node("background/teacher")
@@ -21,6 +22,7 @@ func _ready():
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
 	
+	global.student_auto_mode = true
 
 	
 	
@@ -28,8 +30,6 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
-	print(time_to_wait)
-	
 	if (global.student_reach_teacher == true):
 		get_node("AnimationPlayer").play("teacher_read")
 		global.student_reach_teacher = false
@@ -39,8 +39,10 @@ func _process(delta):
 	# Move new student
 	if (global.can_go):
 		if (global.next_student == true):
-			var new_student = scene.instance()
-			get_parent().add_child(new_student)
+			#var new_student = scene.instance()
+			#get_parent().add_child(new_student)
+			var new_animated_student = animated_student_scene.instance()
+			get_parent().add_child(new_animated_student)
 			global.can_go = false
 			timer.start()
 			

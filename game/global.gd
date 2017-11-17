@@ -64,6 +64,8 @@ var question_answered = false
 # 0 = programming
 var check_return
 
+var student_auto_mode = false
+
 # Each time when question asked, it erase from dictionary. Function return size of dict
 func questions_last(qsts):
 	return qsts.size()

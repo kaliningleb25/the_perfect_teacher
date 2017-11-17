@@ -8,6 +8,7 @@ var door_programming_size
 
 onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
 onready var door_programming = get_node("door_programming")
+onready var animated_student_scene = load("res://scenes/student/animated_student.tscn")
 
 
 
@@ -17,6 +18,13 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	
 	door_programming_size = get_node("door_programming").get_texture().get_size()
+	global.student_auto_mode = false
+
+
+	var new_animated_student = animated_student_scene.instance()
+	get_parent().add_child(new_animated_student)
+	
+
 	set_process(true)
 
 func _process(delta):
