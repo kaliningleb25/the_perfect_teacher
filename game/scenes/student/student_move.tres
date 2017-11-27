@@ -197,7 +197,7 @@ tracks/18/keys = {
 "values": [ 0.0, 0.0, 0.0 ]
 }
 tracks/19/type = "value"
-tracks/19/path = NodePath("")
+tracks/19/path = NodePath(".")
 tracks/19/interp = 1
 tracks/19/imported = false
 tracks/19/keys = {
@@ -207,7 +207,7 @@ tracks/19/keys = {
 "values": [  ]
 }
 tracks/20/type = "value"
-tracks/20/path = NodePath("")
+tracks/20/path = NodePath(".")
 tracks/20/interp = 1
 tracks/20/imported = false
 tracks/20/keys = {
@@ -217,7 +217,7 @@ tracks/20/keys = {
 "values": [  ]
 }
 tracks/21/type = "value"
-tracks/21/path = NodePath("")
+tracks/21/path = NodePath(".")
 tracks/21/interp = 1
 tracks/21/imported = false
 tracks/21/keys = {
@@ -227,7 +227,7 @@ tracks/21/keys = {
 "values": [  ]
 }
 tracks/22/type = "value"
-tracks/22/path = NodePath("")
+tracks/22/path = NodePath(".")
 tracks/22/interp = 1
 tracks/22/imported = false
 tracks/22/keys = {
@@ -237,7 +237,7 @@ tracks/22/keys = {
 "values": [  ]
 }
 tracks/23/type = "value"
-tracks/23/path = NodePath("")
+tracks/23/path = NodePath(".")
 tracks/23/interp = 1
 tracks/23/imported = false
 tracks/23/keys = {
@@ -247,7 +247,7 @@ tracks/23/keys = {
 "values": [  ]
 }
 tracks/24/type = "value"
-tracks/24/path = NodePath("")
+tracks/24/path = NodePath(".")
 tracks/24/interp = 1
 tracks/24/imported = false
 tracks/24/keys = {
@@ -257,7 +257,7 @@ tracks/24/keys = {
 "values": [  ]
 }
 tracks/25/type = "value"
-tracks/25/path = NodePath("")
+tracks/25/path = NodePath(".")
 tracks/25/interp = 1
 tracks/25/imported = false
 tracks/25/keys = {
@@ -267,7 +267,7 @@ tracks/25/keys = {
 "values": [  ]
 }
 tracks/26/type = "value"
-tracks/26/path = NodePath("")
+tracks/26/path = NodePath(".")
 tracks/26/interp = 1
 tracks/26/imported = false
 tracks/26/keys = {
@@ -277,7 +277,7 @@ tracks/26/keys = {
 "values": [  ]
 }
 tracks/27/type = "value"
-tracks/27/path = NodePath("")
+tracks/27/path = NodePath(".")
 tracks/27/interp = 1
 tracks/27/imported = false
 tracks/27/keys = {
@@ -291,9 +291,9 @@ tracks/28/path = NodePath("torso:transform/pos")
 tracks/28/interp = 1
 tracks/28/imported = false
 tracks/28/keys = {
-"times": FloatArray( 0, 0.2, 0.3, 0.8, 0.9 ),
-"transitions": FloatArray( 1, 1, 1, 1, 1 ),
+"times": FloatArray(  ),
+"transitions": FloatArray(  ),
 "update": 0,
-"values": [ Vector2( 37.3676, 319.055 ), Vector2( 37.3676, 317.055 ), Vector2( 37.3676, 319.305 ), Vector2( 37.3676, 317.055 ), Vector2( 37.3676, 319.305 ) ]
+"values": [  ]
 }
 

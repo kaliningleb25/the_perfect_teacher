@@ -9,12 +9,17 @@ onready var exit_to_corridor_scene = load("res://scenes/interactive_menu_program
 
 onready var teacher = get_node("background/teacher")
 
+onready var main_scene = load("res://scenes/main/university.tscn")
+
 # Timer
 onready var timer = get_node("Timer")
 
 onready var time_to_wait = randf()*3+1
 
 func _ready():
+	var questions_file = File.new()
+	questions_file.open("res://questions/qst.json", File.READ)
+	global.questions.parse_json(questions_file.get_as_text())
 	# Called every time the node is added to the scene.
 	# Initialization here
 	global.teacher_pos = teacher.get_global_pos().x
@@ -22,9 +27,11 @@ func _ready():
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
 	
+#	global.test2 = global.questions[global.discipline_mode][global.category_mode][global.lvl]
+
 	global.student_auto_mode = true
 
-	
+
 	
 
 	set_process(true)
@@ -37,15 +44,24 @@ func _process(delta):
 		get_node("AnimationPlayer").seek(0, true)
 		global.question_answered == false
 	# Move new student
-	if (global.can_go):
-		if (global.next_student == true):
-			#var new_student = scene.instance()
-			#get_parent().add_child(new_student)
-			var new_animated_student = animated_student_scene.instance()
-			get_parent().add_child(new_animated_student)
-			global.can_go = false
-			timer.start()
-			
+	if (global.gameovercheck == false):
+		if (global.can_go):
+			if (global.next_student == true):
+				#var new_student = scene.instance()
+				#get_parent().add_child(new_student)
+				var new_animated_student = animated_student_scene.instance()
+				get_parent().add_child(new_animated_student)
+				global.can_go = false
+				timer.start()
+	else :
+		get_node("background/opened_door").set_disabled(true)
+		get_node("background/bell").set_disabled(true)
+
+	# Check if anser is true - play animation (new points +10)
+	if (global.answer_is_true):
+		get_node("timer_score").start()
+		get_node("anim_new_points").play("anim_new_points")
+		global.answer_is_true = false
 			
 	
 	# Check if gameover 1
@@ -54,8 +70,9 @@ func _process(delta):
 
 	# Check if gameover 2
 	if (global.gameovercheck):
-		get_tree().change_scene("res://scenes/gameover/gameover.tscn")
-		queue_free()
+		#get_tree().change_scene("res://scenes/gameover/gameover.tscn")
+		get_node("GameOverDialog").show()
+		#queue_free()
 		
 
 	
@@ -111,8 +128,6 @@ func load_questions_from_json_file():
 	global.lvl = global.levels_and_names["levels"][global.discipline_mode][global.category_mode][str(global.level_now)]
 	get_node("background/name").set_text(global.levels_and_names["names"][global.discipline_mode][global.category_mode][str(global.level_now)])
 
-func _on_Button_pressed():
-	save()
 
 # TODO :
 # 1) make hovered textures 
@@ -125,7 +140,8 @@ func _on_bell_toggled( pressed ):
 
 
 func _on_opened_door_button_down():
-	get_node("background/ExitDialog").show()
+	if (global.gameovercheck == false):
+		get_node("background/ExitDialog").show()
 
 
 func _on_no_button_down():
@@ -145,4 +161,20 @@ func _on_timer_teacher_eyes_timeout():
 	
 	get_node("AnimationPlayer_teacher_eyes").play("teacher_close_eyes")
 	get_node("AnimationPlayer_teacher_eyes").seek(0, true)
-	#get_node("AnimationPlayer").seek(0, false)
+
+func _on_timer_score_timeout():
+	get_node("score").set_text("Points: " + str(global.score * 10))
+
+
+func _on_play_again_button_down():
+#	pass
+	global.check_restart_game = true
+	get_node("GameOverDialog").hide()
+	global.score = 0
+	get_node("score").set_text("Points: " + str(0))
+	
+#	queue_free()
+#	var new_game = main_scene.instance()
+#	get_parent().add_child(new_game)
+	global.gameovercheck = false
+	

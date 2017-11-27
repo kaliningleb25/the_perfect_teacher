@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Dialog.gd" type="Script" id=1]
 [ext_resource path="res://scenes/paper.png" type="Texture" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://art/dialog/correct.png" type="Texture" id=6]
 [ext_resource path="res://art/dialog/correct_hovered.png" type="Texture" id=7]
 [ext_resource path="res://scenes/dialog/dialog.tres" type="Animation" id=8]
+[ext_resource path="res://art/dialog/new_point.png" type="Texture" id=9]
+[ext_resource path="res://scenes/dialog/anim_new_points.tres" type="Animation" id=10]
 
 [node name="Control" type="Control"]
 
@@ -91,5 +93,22 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = "showDialog"
+
+[node name="new_points" type="Sprite" parent="."]
+
+transform/pos = Vector2( 76.8806, 41.1671 )
+transform/scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 9 )
+
+[node name="AnimationPlayer_new_points" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/anim_new_points = ExtResource( 10 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
 
 

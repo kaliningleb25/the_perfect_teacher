@@ -14,11 +14,13 @@ onready var exit_to_previous_corridor_scene = load("res://scenes/interactive_men
 onready var door_c = get_node("door_c")
 onready var door_java = get_node("door_java")
 
+onready var stud_pos
 
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	global.student_auto_mode = false
 	screen_size = get_viewport_rect().size
 	# Can refactor using .JSOM
 	if (global.discipline_mode == "programming"):
@@ -29,17 +31,18 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
-	var stud_pos = get_node("stud").get_pos()
+	if (global.student_auto_mode == false):
+		stud_pos = get_node("stud/torso").get_pos()
 	
 	var door_c_rect = Rect2( get_node("door_c").get_pos() - door_size*0.5, door_size )
 	var door_java_rect = Rect2( get_node("door_java").get_pos() - door_size*0.5, door_size)
 	
 	# Move student left and right
-	if (stud_pos.x > 0 and Input.is_action_pressed("ui_left")):
-		stud_pos.x += -100 * delta
-	if (stud_pos.x < screen_size.x and Input.is_action_pressed("ui_right")):
-		stud_pos.x += 100 * delta
-	get_node("stud").set_pos(stud_pos)
+#	if (stud_pos.x > 0 and Input.is_action_pressed("ui_left")):
+#		stud_pos.x += -100 * delta
+#	if (stud_pos.x < screen_size.x and Input.is_action_pressed("ui_right")):
+#		stud_pos.x += 100 * delta
+#	get_node("stud").set_pos(stud_pos)
 	
 	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
 		print("ENTER THE DOOR!")
@@ -62,3 +65,7 @@ func _process(delta):
 		get_parent().add_child(exit_to_prev_cor)
 		global.check_return = 0
 		queue_free()
+		
+	if (global.check_start_new_game): 
+		queue_free()
+		global.check_start_new_game = false

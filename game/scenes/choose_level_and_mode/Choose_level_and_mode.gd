@@ -37,6 +37,7 @@ func _on_btn_start_pressed():
 	if (global.check_focus):
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
+		global.check_start_new_game = true
 		queue_free()
 	else :
 		get_node("PopupDialog").show()

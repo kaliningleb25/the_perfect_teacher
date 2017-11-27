@@ -4,7 +4,7 @@
 [ext_resource path="res://art/interactive_menu/corridor.png" type="Texture" id=2]
 [ext_resource path="res://art/interactive_menu/door_1.png" type="Texture" id=3]
 [ext_resource path="res://art/interactive_menu/door_2.png" type="Texture" id=4]
-[ext_resource path="res://scenes/main/student2.png" type="Texture" id=5]
+[ext_resource path="res://scenes/student/animated_student.tscn" type="PackedScene" id=5]
 
 [node name="Node2D" type="Node2D"]
 
@@ -38,11 +38,6 @@ texture = ExtResource( 3 )
 transform/pos = Vector2( 723.613, 335.433 )
 texture = ExtResource( 4 )
 
-[node name="stud" type="Sprite" parent="."]
-
-transform/pos = Vector2( 73.1334, 394.47 )
-texture = ExtResource( 5 )
-
 [node name="label_c" type="Label" parent="."]
 
 focus/ignore_mouse = true
@@ -72,5 +67,9 @@ text = "C++"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="stud" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 0, 62.8291 )
 
 

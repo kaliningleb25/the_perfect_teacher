@@ -3,7 +3,7 @@
 [ext_resource path="res://scenes/interactive_menu/interactive_menu.gd" type="Script" id=1]
 [ext_resource path="res://art/interactive_menu/corridor.png" type="Texture" id=2]
 [ext_resource path="res://art/interactive_menu/door_1.png" type="Texture" id=3]
-[ext_resource path="res://scenes/main/student2.png" type="Texture" id=4]
+[ext_resource path="res://scenes/student/animated_student.tscn" type="PackedScene" id=4]
 
 [node name="Node2D" type="Node2D"]
 
@@ -24,13 +24,8 @@ stretch_mode = 0
 
 [node name="door_programming" type="Sprite" parent="."]
 
-transform/pos = Vector2( 314.441, 336.273 )
+transform/pos = Vector2( 311.079, 334.645 )
 texture = ExtResource( 3 )
-
-[node name="stud" type="Sprite" parent="."]
-
-transform/pos = Vector2( 350, 386.737 )
-texture = ExtResource( 4 )
 
 [node name="label" type="Label" parent="."]
 
@@ -46,5 +41,9 @@ text = "Programming"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="stud" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 0, 62.8291 )
 
 

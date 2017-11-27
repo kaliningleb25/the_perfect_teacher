@@ -21,18 +21,26 @@ onready var string
 onready var q
 # For store value of question (1 or 0)
 onready var val
+#onready var test2 = global.questions[global.discipline_mode][global.category_mode][global.lvl]
+
+#onready var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
+
+
 
 # Get a random question
 func get_question():
 	randomize()
-	var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
-	if (test.size() != 0):
-		rand_index = randi()%test.keys().size()
-		string = test.keys()[rand_index]
+	global.test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
+#	var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
+	print("global.test.size() ", global.test.size())
+
+	if (global.test.size() != 0):
+		rand_index = randi()%global.test.keys().size()
+		string = global.test.keys()[rand_index]
 		question.set_text(string)
 		q = string
-		val = test[string]
-		test.erase(string)
+		val = global.test[string]
+		global.test.erase(string)
 	else:
 		queue_free()
 	
@@ -60,8 +68,8 @@ func check_answer():
 	if (val == check):
 		check_answer = 1
 		global.score += 1
-		var new_score = score_scene.instance()
-		get_parent().add_child(new_score)
+		global.answer_is_true = true
+
 	elif ((val != check) and (check != -1)):
 		check_answer = 0
 		global.gameovercheck = true
@@ -71,6 +79,16 @@ func check_answer():
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+
+#	print("global.test2 size : ", global.test2.size())
+	if (global.check_restart_game):
+		var questions_file = File.new()
+		questions_file.open("res://questions/qst.json", File.READ)
+		global.questions.parse_json(questions_file.get_as_text())
+		global.check_restart_game = false
+	#	test = test2
+	#	global.check_restart_game = false
+
 	get_question()
 	set_process(true)
 	get_node("paper/question").set_scroll_follow(true)
@@ -83,3 +101,5 @@ func _process(delta):
 	if (global.gameovercheck):
 		queue_free()
 	
+
+

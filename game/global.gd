@@ -61,10 +61,24 @@ var student_reach_teacher = false
 
 var question_answered = false
 
+var check_start_new_game = false
+
 # 0 = programming
 var check_return
 
 var student_auto_mode = false
+
+var student_position
+
+var answer_is_true = false
+
+var check_restart_game = false
+
+var test = {}
+
+var test2 = {}
+
+var test3 = {}
 
 # Each time when question asked, it erase from dictionary. Function return size of dict
 func questions_last(qsts):
@@ -78,9 +92,10 @@ func ready_next_level(qsts):
 		return false
 
 func _ready():
+	pass
 	# Called every time the node is added to the scene.
 	# Initialization here
 	# Get questions from file:
-	var questions_file = File.new()
-	questions_file.open("res://questions/qst.json", File.READ)
-	global.questions.parse_json(questions_file.get_as_text())
+#	var questions_file = File.new()
+#	questions_file.open("res://questions/qst.json", File.READ)
+#	global.questions.parse_json(questions_file.get_as_text())
