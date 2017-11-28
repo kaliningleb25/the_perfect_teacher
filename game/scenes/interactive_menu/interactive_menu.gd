@@ -10,6 +10,7 @@ onready var scene = load("res://scenes/interactive_menu_programming/interactive_
 onready var door_programming = get_node("door_programming")
 
 func _ready():
+	get_tree().set_auto_accept_quit(true)
 	# Called every time the node is added to the scene.
 	# Initialization here
 	screen_size = get_viewport_rect().size

@@ -6,6 +6,10 @@
 			"2" : ["http://cppstudio.com/post/437/", "http://cppstudio.com/post/429/", "http://cppstudio.com/post/423/", "http://cppstudio.com/post/389/"],
 			"3" : ["http://cppstudio.com/post/446/"],
 			"4" : "test"
+		},
+		"java" : {
+			"0" : ["http://google.com"],
+			"1" : ["http://yandex.ru"]
 		}
 	}
 }

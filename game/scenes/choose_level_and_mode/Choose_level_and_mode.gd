@@ -13,12 +13,16 @@ func _ready():
 	
 	if (global.level_now >= 0) :
 		get_node("Panel/btn_first_level").set_disabled(false)
+		global.levels_enabled = 0
 	if (global.level_now >= 1) :
 		get_node("Panel/btn_second_level").set_disabled(false)
+		global.levels_enabled = 1
 	if (global.level_now >= 2) :
 		get_node("Panel/btn_third_level").set_disabled(false)
+		global.levels_enabled = 2
 	if (global.level_now >= 3) :
 		get_node("Panel/btn_fourth_level").set_disabled(false)
+		global.levels_enabled = 3
 
 func load_game():
 	var save_file = File.new()

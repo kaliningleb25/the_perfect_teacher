@@ -81,13 +81,12 @@ func _ready():
 	# Initialization here
 
 #	print("global.test2 size : ", global.test2.size())
-	if (global.check_restart_game):
+	if (global.check_restart_game_or_exit_to_menu):
 		var questions_file = File.new()
 		questions_file.open("res://questions/qst.json", File.READ)
 		global.questions.parse_json(questions_file.get_as_text())
-		global.check_restart_game = false
-	#	test = test2
-	#	global.check_restart_game = false
+		global.check_restart_game_or_exit_to_menu = false
+
 
 	get_question()
 	set_process(true)

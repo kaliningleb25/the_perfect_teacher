@@ -18,6 +18,7 @@ onready var stud_pos
 
 
 func _ready():
+	get_tree().set_auto_accept_quit(true)
 	# Called every time the node is added to the scene.
 	# Initialization here
 	global.student_auto_mode = false
@@ -31,8 +32,10 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	# TODO: REPAIR!
 	if (global.student_auto_mode == false):
 		stud_pos = get_node("stud/torso").get_pos()
+	# _____________________________________________
 	
 	var door_c_rect = Rect2( get_node("door_c").get_pos() - door_size*0.5, door_size )
 	var door_java_rect = Rect2( get_node("door_java").get_pos() - door_size*0.5, door_size)

@@ -72,13 +72,16 @@ var student_position
 
 var answer_is_true = false
 
-var check_restart_game = false
+var check_restart_game_or_exit_to_menu = false
 
 var test = {}
 
 var test2 = {}
 
-var test3 = {}
+var levels_enabled
+
+var check_exit = false
+
 
 # Each time when question asked, it erase from dictionary. Function return size of dict
 func questions_last(qsts):

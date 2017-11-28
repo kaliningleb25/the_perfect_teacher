@@ -6,6 +6,8 @@ extends Node2D
 
 # Speed of student
 const MOVEMENT_SPEED = 2
+#FOR TEST: 
+#const MOVEMENT_SPEED = 10
 # Dialog scene
 onready var dialog_scene = load("res://scenes/dialog/dialog.tscn") # will load when parsing the script
 onready var screen_size
@@ -22,6 +24,8 @@ func _ready():
 	get_node("timer_student_eye").set_wait_time(time_to_wait)
 	get_node("timer_student_eye").start()
 	
+
+	
 	set_process(true)
 
 func _process(delta):
@@ -33,10 +37,11 @@ func _process(delta):
 	
 	# Check if student interacte with teacher(624.565674)
 	# If true - show dialog window
-		if (get_pos().x >= global.teacher_pos):
-			var new_dialog = dialog_scene.instance()
-			get_parent().add_child(new_dialog)
-			global.dialog_scene_counter += 1
+		if (global.check_exit == false):
+			if (get_pos().x >= global.teacher_pos):
+				var new_dialog = dialog_scene.instance()
+				get_parent().add_child(new_dialog)
+				global.dialog_scene_counter += 1
 		
 
 		# Check if student is out of screen or destinate a teacher
@@ -58,10 +63,14 @@ func _process(delta):
 			# Move student left and right
 		if (stud_pos.x > 0 and Input.is_action_pressed("ui_left")):
 			stud_pos.x += -100 * delta
+			#FOR TEST:
+			#stud_pos.x += -300 * delta	
 			if (not get_node("AnimationPlayer").is_playing()): 
 				get_node("AnimationPlayer").play("student_move")
 		if (stud_pos.x < screen_size.x and Input.is_action_pressed("ui_right")):
 			stud_pos.x += 100 * delta
+			#FOR TEST:
+			#stud_pos.x += 300 * delta	
 			if (not get_node("AnimationPlayer").is_playing()): 
 				get_node("AnimationPlayer").play("student_move")
 		get_node("torso").set_pos(stud_pos)

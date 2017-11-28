@@ -5,7 +5,8 @@ extends Node2D
 # Student scene
 onready var scene = load("res://scenes/student/student.tscn") # will load when parsing the script
 onready var animated_student_scene = load("res://scenes/student/animated_student.tscn")
-onready var exit_to_corridor_scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn") # exit to corridot
+onready var exit_to_corridor_scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn") # exit to corridor
+onready var exit_to_interactive_menu_scene = load("res://scenes/interactive_menu/interactive_menu.tscn") # exit to interactive menu from dialog
 
 onready var teacher = get_node("background/teacher")
 
@@ -17,6 +18,8 @@ onready var timer = get_node("Timer")
 onready var time_to_wait = randf()*3+1
 
 func _ready():
+	timer.start()
+	get_tree().set_auto_accept_quit(false)
 	var questions_file = File.new()
 	questions_file.open("res://questions/qst.json", File.READ)
 	global.questions.parse_json(questions_file.get_as_text())
@@ -27,9 +30,10 @@ func _ready():
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
 	
-#	global.test2 = global.questions[global.discipline_mode][global.category_mode][global.lvl]
-
 	global.student_auto_mode = true
+	
+	global.gameovercheck = false
+	
 
 
 	
@@ -99,11 +103,15 @@ func save():
 	save_file.close()
 
 func level_up():
-	global.level_now += 1
-	load_questions_from_json_file()
+	if (not (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered)):
+		get_node("NextLevelDialog").show()
+	global.can_go = false
+	#global.level_now += 1
+	#load_questions_from_json_file()
 
 # If time is out - next student can go
 func _on_Timer_timeout():
+	global.check_exit = false
 	global.can_go = true
 	get_node("background/closed_door").hide()
 	get_node("background/opened_door").show()
@@ -118,6 +126,11 @@ func _on_Timer_timeout():
 			global.next_student = true
 			print ("Ready to go to the next level!")
 			level_up()
+			
+	if (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered):
+		#get_node("win_info").show()
+		get_node("Particles2D").show()
+		
 
 
 func load_questions_from_json_file():
@@ -149,11 +162,26 @@ func _on_no_button_down():
 
 
 func _on_yes_button_down():
-	if (global.level_now > global.levels_arr[global.index_of_level]) :
+	global.check_exit = true
+	global.dialog_scene_counter = 0
+#	global.check_start_new_game = true
+#	timer.stop()
+	global.can_go = false
+	if (get_node("AnimationPlayer").is_playing()):
+		get_node("AnimationPlayer").seek(0, true)
+	global.check_restart_game_or_exit_to_menu = true
+	global.score = 0
+
+	if (global.level_now > global.levels_enabled):
 		save()
+	global.question_answered = false
+
 	var confirm_quit = exit_to_corridor_scene.instance()
 	get_parent().add_child(confirm_quit)
+
 	queue_free()
+	
+
 
 func _on_timer_teacher_eyes_timeout():
 	 # replace with function body
@@ -168,13 +196,77 @@ func _on_timer_score_timeout():
 
 func _on_play_again_button_down():
 #	pass
-	global.check_restart_game = true
+	global.dialog_scene_counter = 0
+	global.check_restart_game_or_exit_to_menu = true
 	get_node("GameOverDialog").hide()
 	global.score = 0
 	get_node("score").set_text("Points: " + str(0))
 	
+	get_node("background/opened_door").set_disabled(false)
+	get_node("background/bell").set_disabled(false)
 #	queue_free()
 #	var new_game = main_scene.instance()
 #	get_parent().add_child(new_game)
 	global.gameovercheck = false
 	
+
+
+func _on_exit_to_interactive_menu_button_down():
+	global.dialog_scene_counter = 0
+	global.can_go = false
+	get_node("AnimationPlayer").seek(0, true)
+	global.check_restart_game_or_exit_to_menu = true
+	get_node("GameOverDialog").hide()
+	global.score = 0
+
+	if (global.level_now > global.levels_enabled):
+		save()
+	global.question_answered = false
+
+	get_node("background/opened_door").set_disabled(false)
+	get_node("background/bell").set_disabled(false)
+
+	var exit_to_inter_menu = exit_to_interactive_menu_scene.instance()
+	get_parent().add_child(exit_to_inter_menu)
+	
+	global.gameovercheck = false
+	queue_free()
+#	print(get_child_count())
+	#for i in range(0, get_child_count()):
+	 #   get_child(i).queue_free()
+	
+func _notification(what):
+	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
+		get_node("background/MainExitDialog").show()
+
+
+func _on_main_yes_button_down():
+	if (global.level_now > global.levels_enabled):
+		save()
+	get_tree().quit()
+
+
+func _on_main_no_button_down():
+	get_node("background/MainExitDialog").hide()
+
+
+func _on_btn_next_lvl_button_down():
+	get_node("NextLevelDialog").hide()
+	global.can_go = true
+	global.level_now += 1
+	load_questions_from_json_file()
+
+
+func _on_btn_goto_lecture_button_down():
+	var lectures_file = File.new()
+	lectures_file.open("res://lectures/lectures.json", File.READ)
+	
+	var lectures = {}
+	
+	lectures.parse_json(lectures_file.get_as_text())
+	# Parse from .json file all lectures for selected discipline, category and level:
+	var lects = lectures[global.discipline_mode][global.category_mode][str(global.level_now + 1)]
+
+	# Open all lectures for selected discipline, category and level in browser:
+	for i in range(0, lects.size()) :
+		OS.shell_open(lects[i])
