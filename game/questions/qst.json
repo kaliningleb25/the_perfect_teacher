@@ -28,7 +28,6 @@
 					"Вопрос: Какому зарезервированному слову программа передаёт управление в случае, если значение переменной или выражения оператора switch не совпадает ни с одним константным выражением?\n\nОтвет: default" : 1,
 					"Вопрос: Каков результат работы следующего франмента кода?\nint x = 0;\n    switch(x)\n    {\n      case 1: cout << \"Один\";\n      case 0: cout << \"Нуль\";\n      case 2: cout << \"Привет мир\";\n    }\n\nОтвет: Нуль" : 0,
 					"Вопрос: Общий формат оператора множественного выбора - switch\n\nОтвет: switch (switch_expression)\n{\n    case constant1: statement1; [break;]\n    case constant2: statement2; [break;]\n    case constantN: statementN; [break;]\n    [default: statement N+l;]\n}\n" : 1,
-					"Вопрос: Что будет напечатано?\nint main()\n {\n    for (int i = 0; i < 4; ++i)\n    {\n       switch (i)\n       {\n          case 0  : std::cout << \"0\";\n          case 1  : std::cout << \"1\"; continue;\n          case 2  : std::cout << \"2\"; break;\n          default : std::cout << \"D\"; break;\n       }\n       std::cout << \".\";\n    }\n    return 0;\n }\n\nОтвет: 0112.." : 0,
 					"Вопрос: В приведённом коде измените или добавьте один символ чтобы код напечатал 20 звёздочек - *.\nint i, N = 20;\nfor(i = 0; i < N; i--)\n    printf(\"*\")\n\nОтвет: int i, N = 20;\nfor(i = 0; i < N; N--)\n    printf(\"*\");" : 1
 			},
 			"c_lvl2" : {
@@ -40,7 +39,6 @@
 					"Вопрос: Чему равен результат выполнения следующего выражения: 1000 / 100 % 7 * 2 ?\n\nОтвет: 6" : 1,
 					"Вопрос: Это значение 5.9875e17 может быть сохранено в переменной, типа:\n\nОтвет: float" : 1,
 					"Вопрос: #include\nint main(int argc, char** argv)\n{\n   int x = 0;\n   int y = 0;\n   if (x++ && y++)\n   {\n     y += 2;\n   }\n   std::cout << x + y << std::endl;\nreturn 0;\n}\n\nОтвет: 4" : 0,
-					"Вопрос: Какое значение будет напечатано, в результате выполнения программы?\n#include\n int main()\n {\n  int x = 3;\n  switch(x)\n  {\n    case 0:\n      int x = 1;\n      std::cout << x << std::endl;\n    break;\n    case 3:\n      std::cout << x << std::endl;\n    break;\n    default:\n      x = 2;\n      std::cout << x << std::endl;\n  }\n  return 0;\n}\n\nОтвет: 3" : 0,
 					"Вопрос: Какое из значений эквивалентно зарезервированному слову true?\n\nОтвет: 100" : 0,
 					"Вопрос: Логический оператор И?\n\nОтвет: &&" : 1,
 					"Вопрос: Каков будет результат выражения !(1 && !(0 || 1))?\n\nОтвет: True" : 1,
@@ -73,7 +71,6 @@
 					"Вопрос: Что такое ссылка?\n\nОтвет: Ссылка является псевдонимом для объекта" : 1,
 					"Вопрос: Строка Привет Мир будет показана на экране или нет?\nint main(int argc, char** argv)\n{\n  int array[33];\n  if ( &array[4] < &array[23] )\n  {\n    std::cout << \"Привет мир\" << std::endl;\n  }\n  return 0;\n}\n\nОтвет: Да" : 1,
 					"Вопрос: Программа напечатает строку Я программист или нет?\nstruct Foo\n{\n  int x;\n  int y;\n};\nint main(int argc, char** argv)\n{\n  Foo f;\n  if ( &f.x < &f.y )\n  {\n    std::cout << \"Я программист\" << std::endl;\n  }\n  return 0;\n}\n\nОтвет: Да" : 1,
-					"Вопрос: Будет ли напечатано сообщение не равны?\nstruct Foo\n{\n};\nstruct Bar\n{\n};\nint main(int argc, char** argv)\n{\n  Foo* f = new Foo;\n  Bar* b = new Bar;\n  if ( f == b )\n    std::cout << \"равны\" << std::endl;\n  else\n    std::cout << \"не равны\" << std::endl;\n  return 0;\n}\n\nОтвет: Нет" : 1,
 					"Вопрос: Код, указанный ниже объявляет массив ссылок. Правда это или нет?\nint main()\n{\n  int& x[50];\n  return 0;\n}\n\nОтвет: Да" : 0,
 					"Вопрос: Укажите правильное объявление указателя в С++\n\nОтвет: int *x;" : 1,
 					"Вопрос: Укажите операцию разименования?\n\nОтвет: a*" : 0,

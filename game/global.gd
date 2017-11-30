@@ -41,15 +41,29 @@ var levels_and_names = {}
 
 var levels_types = {}
 
+var levels_types_for_scores = {}
+
 # What type of level rught now (C++, Java etc.)
 var level_now
+
+var programming
 
 # For array of levels
 var c_level
 var java_level
 
-# Array for save game for each discipline and category
+# ------------------------------------------
+# Array for save game for each discipline
+var disciplines_arr = [programming]
+
+# Array for save game for each category
 var levels_arr = [c_level, java_level]
+# ------------------------------------------
+
+var scores_c = []
+var scores_java = []
+
+var scores = [scores_c, scores_java]
 
 # 0 = c_level, 1 = java_level
 # TODO: WARNING! CHANGE THIS WHEN ADD NEW DISCIPLINE
@@ -81,6 +95,10 @@ var test2 = {}
 var levels_enabled
 
 var check_exit = false
+
+var sound = 1
+
+var question_answered_for_sound = false
 
 
 # Each time when question asked, it erase from dictionary. Function return size of dict

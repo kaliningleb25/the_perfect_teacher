@@ -18,17 +18,24 @@ onready var timer = get_node("Timer")
 onready var time_to_wait = randf()*3+1
 
 func _ready():
+
+	check_sound()
+	AudioServer.set_fx_global_volume_scale(global.sound)
 	timer.start()
 	get_tree().set_auto_accept_quit(false)
+	
 	var questions_file = File.new()
 	questions_file.open("res://questions/qst.json", File.READ)
 	global.questions.parse_json(questions_file.get_as_text())
+	
 	# Called every time the node is added to the scene.
 	# Initialization here
 	global.teacher_pos = teacher.get_global_pos().x
 	var type = get_node("background/type")
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
+	
+
 	
 	global.student_auto_mode = true
 	
@@ -43,8 +50,10 @@ func _ready():
 func _process(delta):
 	if (global.student_reach_teacher == true):
 		get_node("AnimationPlayer").play("teacher_read")
+		get_node("Timer_How_Long_Answered").start()
 		global.student_reach_teacher = false
 	if (global.question_answered == true):
+		get_node("Timer_How_Long_Answered").stop()
 		get_node("AnimationPlayer").seek(0, true)
 		global.question_answered == false
 	# Move new student
@@ -59,13 +68,18 @@ func _process(delta):
 				timer.start()
 	else :
 		get_node("background/opened_door").set_disabled(true)
-		get_node("background/bell").set_disabled(true)
+		get_node("background/bell_on").set_disabled(true)
+		get_node("background/bell_off").set_disabled(true)
 
 	# Check if anser is true - play animation (new points +10)
 	if (global.answer_is_true):
 		get_node("timer_score").start()
 		get_node("anim_new_points").play("anim_new_points")
 		global.answer_is_true = false
+		
+	if (global.question_answered_for_sound):
+		get_node("SamplePlayer_Teacher").play("pen_write_answer")
+		global.question_answered_for_sound = false
 			
 	
 	# Check if gameover 1
@@ -101,6 +115,39 @@ func save():
 		save_file.store_string(",\n")
 	save_file.store_line("}")
 	save_file.close()
+	
+func save_score():
+	var save_score_file = File.new()
+	save_score_file.open("res://score/score.json", File.WRITE)
+	save_score_file.store_line("{")
+	for i in range (0, global.levels_arr.size()):
+		save_score_file.store_string("\"")
+		save_score_file.store_string(global.levels_types.keys()[i])
+		save_score_file.store_string("\"")
+		save_score_file.store_string(" : ")
+		save_score_file.store_string("{\n")
+		for j in range(0, 4): 
+			save_score_file.store_string("\"")
+			save_score_file.store_string(str(j))
+			save_score_file.store_string("\"")
+			save_score_file.store_string(" : ")
+			if (global.category_mode == global.levels_types.keys()[i]):
+				if (global.level_now == j):
+					save_score_file.store_string(str(global.score * 10))
+				else:
+					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
+					save_score_file.store_string(str(global.scores[i][j])) #str(0)
+					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
+			else :
+				save_score_file.store_string(str(0))
+			save_score_file.store_string(",\n")
+		save_score_file.store_string("}")
+		if (i != global.levels_arr.size() - 1):
+			save_score_file.store_string(",")
+		save_score_file.store_string("\n")
+	save_score_file.store_line("}")
+	save_score_file.close()
+	
 
 func level_up():
 	if (not (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered)):
@@ -113,8 +160,7 @@ func level_up():
 func _on_Timer_timeout():
 	global.check_exit = false
 	global.can_go = true
-	get_node("background/closed_door").hide()
-	get_node("background/opened_door").show()
+
 	
 
 	get_node("timer_teacher_eyes").set_wait_time(time_to_wait)
@@ -123,13 +169,15 @@ func _on_Timer_timeout():
 	if(global.ready_next_level(global.questions[global.discipline_mode][global.category_mode][global.lvl].keys())):
 		global.next_student = false
 		if(global.dialog_scene_counter == 0):
-			global.next_student = true
-			print ("Ready to go to the next level!")
-			level_up()
+			if (global.gameovercheck == false):
+				global.next_student = true
+				print ("Ready to go to the next level!")
+				level_up()
 			
 	if (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered):
+		if (global.gameovercheck == false):
 		#get_node("win_info").show()
-		get_node("Particles2D").show()
+			get_node("Particles2D").show()
 		
 
 
@@ -142,23 +190,15 @@ func load_questions_from_json_file():
 	get_node("background/name").set_text(global.levels_and_names["names"][global.discipline_mode][global.category_mode][str(global.level_now)])
 
 
-# TODO :
-# 1) make hovered textures 
-# 2) mute sounds/ unmute sounds
-func _on_bell_toggled( pressed ):
-	if (pressed):
-		print("pressed")
-	else :
-		get_node("background/bell").release_focus()
 
 
 func _on_opened_door_button_down():
 	if (global.gameovercheck == false):
-		get_node("background/ExitDialog").show()
+		get_node("ExitDialog").show()
 
 
 func _on_no_button_down():
-	 get_node("background/ExitDialog").hide()
+	 get_node("ExitDialog").hide()
 
 
 func _on_yes_button_down():
@@ -203,20 +243,21 @@ func _on_play_again_button_down():
 	get_node("score").set_text("Points: " + str(0))
 	
 	get_node("background/opened_door").set_disabled(false)
-	get_node("background/bell").set_disabled(false)
+	get_node("background/bell_on").set_disabled(false)
+	get_node("background/bell_off").set_disabled(false)
 #	queue_free()
 #	var new_game = main_scene.instance()
 #	get_parent().add_child(new_game)
 	global.gameovercheck = false
 	
 
-
-func _on_exit_to_interactive_menu_button_down():
+func exit_to_interactive_menu():
 	global.dialog_scene_counter = 0
 	global.can_go = false
 	get_node("AnimationPlayer").seek(0, true)
 	global.check_restart_game_or_exit_to_menu = true
 	get_node("GameOverDialog").hide()
+	get_node("NextLevelDialog").hide()
 	global.score = 0
 
 	if (global.level_now > global.levels_enabled):
@@ -224,7 +265,8 @@ func _on_exit_to_interactive_menu_button_down():
 	global.question_answered = false
 
 	get_node("background/opened_door").set_disabled(false)
-	get_node("background/bell").set_disabled(false)
+	get_node("background/bell_on").set_disabled(false)
+	get_node("background/bell_off").set_disabled(false)
 
 	var exit_to_inter_menu = exit_to_interactive_menu_scene.instance()
 	get_parent().add_child(exit_to_inter_menu)
@@ -234,20 +276,24 @@ func _on_exit_to_interactive_menu_button_down():
 #	print(get_child_count())
 	#for i in range(0, get_child_count()):
 	 #   get_child(i).queue_free()
+
+func _on_exit_to_interactive_menu_button_down():
+	exit_to_interactive_menu()
 	
 func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
-		get_node("background/MainExitDialog").show()
+		get_node("MainExitDialog").show()
 
 
 func _on_main_yes_button_down():
+	save_score()
 	if (global.level_now > global.levels_enabled):
 		save()
 	get_tree().quit()
 
 
 func _on_main_no_button_down():
-	get_node("background/MainExitDialog").hide()
+	get_node("MainExitDialog").hide()
 
 
 func _on_btn_next_lvl_button_down():
@@ -270,3 +316,44 @@ func _on_btn_goto_lecture_button_down():
 	# Open all lectures for selected discipline, category and level in browser:
 	for i in range(0, lects.size()) :
 		OS.shell_open(lects[i])
+
+
+func _on_btn_exit_button_down():
+	exit_to_interactive_menu()
+
+
+func _on_Timer_Before_Start_timeout():
+	get_node("SamplePlayer").play("door_opened2")
+	global.check_exit = false
+	global.can_go = true
+	get_node("background/closed_door").hide()
+	get_node("background/opened_door").show()
+
+
+func check_sound():
+	if (global.sound == 0):
+		get_node("background/bell_on").hide()
+		get_node("background/bell_off").show()
+	else:
+		get_node("background/bell_off").hide()
+		get_node("background/bell_on").show()
+
+
+func _on_bell_on_button_down():
+	get_node("background/bell_on").hide()
+	get_node("background/bell_off").show()
+	global.sound = 0
+	AudioServer.set_fx_global_volume_scale(global.sound)
+	
+
+
+func _on_bell_off_button_down():
+	get_node("background/bell_off").hide()
+	get_node("background/bell_on").show()
+	global.sound = 1
+	AudioServer.set_fx_global_volume_scale(global.sound)
+
+
+func _on_Timer_How_Long_Answered_timeout():
+	if (global.question_answered == false):
+		get_node("SamplePlayer_Teacher").play("teacher_sigh")

@@ -296,4 +296,14 @@ tracks/28/keys = {
 "update": 0,
 "values": [  ]
 }
+tracks/29/type = "value"
+tracks/29/path = NodePath("SamplePlayer:play/play")
+tracks/29/interp = 1
+tracks/29/imported = false
+tracks/29/keys = {
+"times": FloatArray( 0, 0.5 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 2,
+"values": [ "footstep_right", "footstep_left" ]
+}
 

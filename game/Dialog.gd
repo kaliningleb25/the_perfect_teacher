@@ -32,7 +32,7 @@ func get_question():
 	randomize()
 	global.test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
 #	var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
-	print("global.test.size() ", global.test.size())
+#	print("global.test.size() ", global.test.size())
 
 	if (global.test.size() != 0):
 		rand_index = randi()%global.test.keys().size()
@@ -50,12 +50,14 @@ func answer():
 	if (b_correct.is_pressed()):
 		check = 1
 		global.question_answered = true
+		global.question_answered_for_sound = true
 		if (global.dialog_scene_counter > 0):
 			global.dialog_scene_counter -= 1
 		queue_free()
 	elif (b_wrong.is_pressed()):
 		check = 0
 		global.question_answered = true
+		global.question_answered_for_sound = true
 		if (global.dialog_scene_counter > 0):
 			global.dialog_scene_counter -= 1
 		queue_free()

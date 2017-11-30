@@ -10,6 +10,7 @@ func _ready():
 	# Initialization here
 	set_process(true)
 	load_game()
+	load_score()
 	
 	if (global.level_now >= 0) :
 		get_node("Panel/btn_first_level").set_disabled(false)
@@ -30,15 +31,38 @@ func load_game():
 		return
 	save_file.open("res://save.json", File.READ)
 	global.levels_types.parse_json(save_file.get_as_text())
-	# Get a opened levels from choosed category(1,2,3..n): 
+	# Get an opened levels from choosed category(1,2,3..n): 
 	global.level_now = global.levels_types[global.category_mode]
 	# Save all levels from each category to array:
 	for i in range(0,global.levels_arr.size()) :
 		global.levels_arr[i] = global.levels_types.values()[i]
 
+func load_score():
+	var load_score_file = File.new()
+	if not load_score_file.file_exists("res://score/score.json"):
+		return
+	load_score_file.open("res://score/score.json", File.READ)
+	global.levels_types_for_scores.parse_json(load_score_file.get_as_text())
+	for i in range(0, global.levels_types_for_scores.size()):
+		for j in range(0, global.levels_types_for_scores[global.category_mode].keys().size()):
+			global.scores[i].append(global.levels_types_for_scores[global.category_mode].values()[j-global.levels_types_for_scores[global.category_mode].keys().size() + 1])
+	
+	
+
+#	for i in range (0, global.scores.size()):
+#		print(global.scores[i])
+#	print(global.scores[0].size())
+	#print(global.scores[0][0])
+
+
+
+	
+	
+
 # Start game with selected category and level:
 func _on_btn_start_pressed():
 	if (global.check_focus):
+		get_node("SamplePlayer").play("door_opened2")
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
 		global.check_start_new_game = true

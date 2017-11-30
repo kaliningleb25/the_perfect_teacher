@@ -18,6 +18,9 @@ onready var stud_pos
 
 
 func _ready():
+	# Check sound on or off
+	check_sound()
+	AudioServer.set_fx_global_volume_scale(global.sound)
 	get_tree().set_auto_accept_quit(true)
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -47,7 +50,8 @@ func _process(delta):
 #		stud_pos.x += 100 * delta
 #	get_node("stud").set_pos(stud_pos)
 	
-	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
+	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_up")):
+		get_node("SamplePlayer").play("knock_on_the_door2")
 		print("ENTER THE DOOR!")
 		global.category_mode = "c_plus_plus"
 		global.ekz_type = "\"" + "C++" + "\""
@@ -55,7 +59,8 @@ func _process(delta):
 		var new_game = scene.instance()
 		get_parent().add_child(new_game)
 		#queue_free()
-	if(door_java_rect.has_point(stud_pos) and Input.is_action_pressed("ui_select")):
+	if(door_java_rect.has_point(stud_pos) and Input.is_action_pressed("ui_up")):
+		get_node("SamplePlayer").play("knock_on_the_door2")
 		print("ENTER THE DOOR!")
 		global.category_mode = "java"
 		global.ekz_type = "\"" + "Java" + "\""
@@ -72,3 +77,24 @@ func _process(delta):
 	if (global.check_start_new_game): 
 		queue_free()
 		global.check_start_new_game = false
+
+func check_sound():
+	if (global.sound == 0):
+		get_node("bell_on").hide()
+		get_node("bell_off").show()
+	else:
+		get_node("bell_off").hide()
+		get_node("bell_on").show()
+
+func _on_bell_on_button_down():
+	get_node("bell_on").hide()
+	get_node("bell_off").show()
+	global.sound = 0
+	AudioServer.set_fx_global_volume_scale(global.sound)
+
+
+func _on_bell_off_button_down():
+	get_node("bell_off").hide()
+	get_node("bell_on").show()
+	global.sound = 1
+	AudioServer.set_fx_global_volume_scale(global.sound)

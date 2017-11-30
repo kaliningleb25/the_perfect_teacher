@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=1]
+[gd_scene load_steps=21 format=1]
 
 [ext_resource path="res://scenes/student/animated_student.gd" type="Script" id=1]
 [ext_resource path="res://art/main/student/student_body.png" type="Texture" id=2]
@@ -17,6 +17,23 @@
 [ext_resource path="res://scenes/student/rest.tres" type="Animation" id=15]
 [ext_resource path="res://scenes/student/student_move.tres" type="Animation" id=16]
 [ext_resource path="res://student_close_eye.tres" type="Animation" id=17]
+[ext_resource path="res://scenes/student/footstep_left.smp" type="Sample" id=18]
+[ext_resource path="res://scenes/student/footstep_right.smp" type="Sample" id=19]
+
+[sub_resource type="SampleLibrary" id=1]
+
+samples/footstep_left = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 18 )
+}
+samples/footstep_right = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 19 )
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -117,7 +134,7 @@ __meta__ = {
 
 visibility/behind_parent = true
 transform/pos = Vector2( 150.205, 395.489 )
-transform/rot = 27.6611
+transform/rot = 2.07225
 transform/scale = Vector2( 0.958628, 0.958628 )
 texture = ExtResource( 9 )
 offset = Vector2( -95.139, 128.866 )
@@ -129,7 +146,7 @@ __meta__ = {
 [node name="shin_l" type="Sprite" parent="torso/leg_l"]
 
 transform/pos = Vector2( -48.4349, 415.028 )
-transform/rot = 15.9701
+transform/rot = -3.84097
 texture = ExtResource( 10 )
 offset = Vector2( -280.22, 80.7962 )
 __meta__ = {
@@ -139,7 +156,7 @@ __meta__ = {
 [node name="foot_l" type="Sprite" parent="torso/leg_l/shin_l"]
 
 transform/pos = Vector2( -438.791, 356.406 )
-transform/rot = -11.5
+transform/rot = -22.2524
 texture = ExtResource( 11 )
 __meta__ = {
 "_edit_bone_": true
@@ -156,7 +173,7 @@ __meta__ = {
 
 visibility/behind_parent = true
 transform/pos = Vector2( -89.7542, 504.784 )
-transform/rot = -22.3372
+transform/rot = 1.59453
 texture = ExtResource( 12 )
 __meta__ = {
 "_edit_bone_": true,
@@ -166,7 +183,7 @@ __meta__ = {
 [node name="shin_r" type="Sprite" parent="torso/leg_r"]
 
 transform/pos = Vector2( 233.01, 193.785 )
-transform/rot = 11.1973
+transform/rot = 22.3229
 transform/scale = Vector2( 1, 0.999999 )
 texture = ExtResource( 13 )
 offset = Vector2( -37.6669, 259.277 )
@@ -177,7 +194,7 @@ __meta__ = {
 [node name="foot_r" type="Sprite" parent="torso/leg_r/shin_r"]
 
 transform/pos = Vector2( 85.7395, 528.544 )
-transform/rot = 10.0
+transform/rot = 18.9051
 transform/scale = Vector2( 1, 0.999999 )
 texture = ExtResource( 14 )
 __meta__ = {
@@ -220,6 +237,23 @@ playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
 autoplay = ""
+
+[node name="SamplePlayer" type="SamplePlayer" parent="."]
+
+config/polyphony = 1
+config/samples = SubResource( 1 )
+default/volume_db = -10.0
+default/pitch_scale = 1.0
+default/pan = 0.0
+default/depth = 1.0
+default/height = 0.0
+default/filter/type = 0
+default/filter/cutoff = 5000.0
+default/filter/resonance = 1.0
+default/filter/gain = 1.0
+default/reverb_room = 3
+default/reverb_send = 0.0
+default/chorus_send = 0.0
 
 [connection signal="timeout" from="timer_student_eye" to="." method="_on_timer_student_eye_timeout"]
 
