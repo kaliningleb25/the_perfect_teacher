@@ -18,7 +18,7 @@ onready var timer = get_node("Timer")
 onready var time_to_wait = randf()*3+1
 
 func _ready():
-
+	
 	check_sound()
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	timer.start()
@@ -27,6 +27,8 @@ func _ready():
 	var questions_file = File.new()
 	questions_file.open("res://questions/qst.json", File.READ)
 	global.questions.parse_json(questions_file.get_as_text())
+	global.lvls_count = global.questions[global.discipline_mode][global.category_mode].size()
+#	print("global.lvls_count ", global.lvls_count)
 	
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -55,7 +57,9 @@ func _process(delta):
 	if (global.question_answered == true):
 		get_node("Timer_How_Long_Answered").stop()
 		get_node("AnimationPlayer").seek(0, true)
+		# Save score in file each time when question is answered (!check weight of process)
 		global.question_answered == false
+		#global.save_score()
 	# Move new student
 	if (global.gameovercheck == false):
 		if (global.can_go):
@@ -92,7 +96,7 @@ func _process(delta):
 		get_node("GameOverDialog").show()
 		#queue_free()
 		
-
+		
 	
 		
 
@@ -116,43 +120,62 @@ func save():
 	save_file.store_line("}")
 	save_file.close()
 	
-func save_score():
-	var save_score_file = File.new()
-	save_score_file.open("res://score/score.json", File.WRITE)
-	save_score_file.store_line("{")
-	for i in range (0, global.levels_arr.size()):
-		save_score_file.store_string("\"")
-		save_score_file.store_string(global.levels_types.keys()[i])
-		save_score_file.store_string("\"")
-		save_score_file.store_string(" : ")
-		save_score_file.store_string("{\n")
-		for j in range(0, 4): 
-			save_score_file.store_string("\"")
-			save_score_file.store_string(str(j))
-			save_score_file.store_string("\"")
-			save_score_file.store_string(" : ")
-			if (global.category_mode == global.levels_types.keys()[i]):
-				if (global.level_now == j):
-					save_score_file.store_string(str(global.score * 10))
-				else:
-					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
-					save_score_file.store_string(str(global.scores[i][j])) #str(0)
-					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
-			else :
-				save_score_file.store_string(str(0))
-			save_score_file.store_string(",\n")
-		save_score_file.store_string("}")
-		if (i != global.levels_arr.size() - 1):
-			save_score_file.store_string(",")
-		save_score_file.store_string("\n")
-	save_score_file.store_line("}")
-	save_score_file.close()
+#func save_score():
+#	var save_score_file = File.new()
+#	save_score_file.open("res://score/score.json", File.WRITE)
+#	save_score_file.store_line("{")
+#	for i in range (0, global.levels_arr.size()):
+#		save_score_file.store_string("\"")
+#		save_score_file.store_string(global.levels_types.keys()[i])
+#		save_score_file.store_string("\"")
+#		save_score_file.store_string(" : ")
+#		save_score_file.store_string("{\n")
+#		for j in range(0, global.questions[global.discipline_mode][global.levels_types.keys()[i]].size()): 
+#			#print("i", i)
+#			#print("j", j)
+#			#print("global.scores[i][j] ", global.scores[i][j])
+#			save_score_file.store_string("\"")
+#			save_score_file.store_string(str(j))
+#			save_score_file.store_string("\"")
+#			save_score_file.store_string(" : ")
+#			#if (global.category_mode == global.levels_types.keys()[i]):
+#			if (global.level_now == j and global.category_mode == global.levels_types.keys()[i]):
+#				print(global.score)
+#
+				# If score is more than in score results => 
+#				# => save new score in file, 
+#				# remove old score from array,
+#				# insert new score in array 
+#				if (global.score > global.scores[i][j]):
+#					save_score_file.store_string(str(global.score))
+#				#	global.scores[i].remove(j)
+#				#	global.scores[i].insert(j, global.score)
+#				else:
+#					save_score_file.store_string(str(global.scores[i][j]))
+#			else:
+#					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
+#				save_score_file.store_string(str(global.scores[i][j])) #str(0)
+#					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
+#			#else :
+#			#	save_score_file.store_string(str(global.scores[i][j]))
+#			if (j != global.questions[global.discipline_mode][global.levels_types.keys()[i]].size() - 1):
+#				save_score_file.store_string(",")
+#			save_score_file.store_string("\n")
+#		save_score_file.store_string("}")
+#		if (i != global.levels_arr.size() - 1):
+#			save_score_file.store_string(",")
+#		save_score_file.store_string("\n")
+#	save_score_file.store_line("}")
+#	save_score_file.close()
 	
 
 func level_up():
+#	save_score()
+	global.save_score()
 	if (not (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered)):
 		get_node("NextLevelDialog").show()
 	global.can_go = false
+	global.score = 0
 	#global.level_now += 1
 	#load_questions_from_json_file()
 
@@ -170,13 +193,16 @@ func _on_Timer_timeout():
 		global.next_student = false
 		if(global.dialog_scene_counter == 0):
 			if (global.gameovercheck == false):
-				global.next_student = true
-				print ("Ready to go to the next level!")
-				level_up()
+				if (global.level_now != (global.lvls_count - 1)):
+				
+					global.next_student = true
+					print ("Ready to go to the next level!")
+					level_up()
 			
 	if (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered):
 		if (global.gameovercheck == false):
 		#get_node("win_info").show()
+			global.save_score()
 			get_node("Particles2D").show()
 		
 
@@ -202,6 +228,7 @@ func _on_no_button_down():
 
 
 func _on_yes_button_down():
+#	save_score()
 	global.check_exit = true
 	global.dialog_scene_counter = 0
 #	global.check_start_new_game = true
@@ -231,7 +258,7 @@ func _on_timer_teacher_eyes_timeout():
 	get_node("AnimationPlayer_teacher_eyes").seek(0, true)
 
 func _on_timer_score_timeout():
-	get_node("score").set_text("Points: " + str(global.score * 10))
+	get_node("score").set_text("Points: " + str(global.score))
 
 
 func _on_play_again_button_down():
@@ -286,7 +313,7 @@ func _notification(what):
 
 
 func _on_main_yes_button_down():
-	save_score()
+	#global.save_score()
 	if (global.level_now > global.levels_enabled):
 		save()
 	get_tree().quit()

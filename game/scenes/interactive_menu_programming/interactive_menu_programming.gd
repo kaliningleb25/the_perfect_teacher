@@ -25,6 +25,8 @@ func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	global.student_auto_mode = false
+
+	
 	screen_size = get_viewport_rect().size
 	# Can refactor using .JSOM
 	if (global.discipline_mode == "programming"):
@@ -51,22 +53,30 @@ func _process(delta):
 #	get_node("stud").set_pos(stud_pos)
 	
 	if(door_c_rect.has_point(stud_pos) and Input.is_action_pressed("ui_up")):
-		get_node("SamplePlayer").play("knock_on_the_door2")
-		print("ENTER THE DOOR!")
-		global.category_mode = "c_plus_plus"
-		global.ekz_type = "\"" + "C++" + "\""
-		global.index_of_level = 0
-		var new_game = scene.instance()
-		get_parent().add_child(new_game)
+		if (!global.key_up_pressed):
+			get_node("SamplePlayer").play("knock_on_the_door2")
+			print("ENTER THE DOOR!")
+			global.category_mode = "c_plus_plus"
+			global.ekz_type = "\"" + "C++" + "\""
+			global.index_of_level = 0
+			global.student_wait = true
+		#	global.key_up_pressed = true
+			var goto_choose_level_and_mode = scene.instance()
+			get_parent().add_child(goto_choose_level_and_mode)
+
 		#queue_free()
 	if(door_java_rect.has_point(stud_pos) and Input.is_action_pressed("ui_up")):
-		get_node("SamplePlayer").play("knock_on_the_door2")
-		print("ENTER THE DOOR!")
-		global.category_mode = "java"
-		global.ekz_type = "\"" + "Java" + "\""
-		global.index_of_level = 1
-		var new_game = scene.instance()
-		get_parent().add_child(new_game)
+		if (!global.key_up_pressed):
+			get_node("SamplePlayer").play("knock_on_the_door2")
+			print("ENTER THE DOOR!")
+			global.category_mode = "java"
+			global.ekz_type = "\"" + "Java" + "\""
+			global.index_of_level = 1
+			global.student_wait = true
+		#	global.key_up_pressed = true
+			var goto_choose_level_and_mode = scene.instance()
+			get_parent().add_child(goto_choose_level_and_mode)
+		
 		
 	if(stud_pos.x < 0): 
 		var exit_to_prev_cor = exit_to_previous_corridor_scene.instance()

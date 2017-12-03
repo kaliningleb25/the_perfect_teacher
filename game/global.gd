@@ -2,7 +2,7 @@ extends Node
 
 
 # MEMBER VARIABLES
-# For each correct answer score + 1
+# For each correct answer score + 10
 var score = 0
 # How much student interacte with a teacher
 var dialog_scene_counter = 0
@@ -57,7 +57,10 @@ var java_level
 var disciplines_arr = [programming]
 
 # Array for save game for each category
-var levels_arr = [c_level, java_level]
+var c_plus_plus
+var java
+
+var levels_arr = [c_plus_plus, java]
 # ------------------------------------------
 
 var scores_c = []
@@ -100,6 +103,64 @@ var sound = 1
 
 var question_answered_for_sound = false
 
+var lvls_count
+
+var student_wait = false
+
+var key_up_pressed = false
+
+
+
+
+func save_score():
+	var save_score_file = File.new()
+	save_score_file.open("res://score/score.json", File.WRITE)
+	save_score_file.store_line("{")
+	for i in range (0, global.levels_arr.size()):
+		save_score_file.store_string("\"")
+		save_score_file.store_string(global.levels_types.keys()[i])
+		save_score_file.store_string("\"")
+		save_score_file.store_string(" : ")
+		save_score_file.store_string("{\n")
+		for j in range(0, global.questions[global.discipline_mode][global.levels_types.keys()[i]].size()): 
+			#print("i", i)
+			#print("j", j)
+			#print("global.scores[i][j] ", global.scores[i][j])
+			save_score_file.store_string("\"")
+			save_score_file.store_string(str(j))
+			save_score_file.store_string("\"")
+			save_score_file.store_string(" : ")
+			#if (global.category_mode == global.levels_types.keys()[i]):
+			if (global.level_now == j and global.category_mode == global.levels_types.keys()[i]):
+				print(global.score)
+
+				# If score is more than in score results => 
+				# => save new score in file, 
+				# remove old score from array,
+				# insert new score in array 
+				if (global.score > global.scores[i][j]):
+					save_score_file.store_string(str(global.score))
+					global.scores[i].remove(j)
+					global.scores[i].insert(j, global.score)
+				else:
+					save_score_file.store_string(str(global.scores[i][j]))
+			else:
+					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
+				save_score_file.store_string(str(global.scores[i][j])) #str(0)
+					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
+			#else :
+			#	save_score_file.store_string(str(global.scores[i][j]))
+			if (j != global.questions[global.discipline_mode][global.levels_types.keys()[i]].size() - 1):
+				save_score_file.store_string(",")
+			save_score_file.store_string("\n")
+		save_score_file.store_string("}")
+		if (i != global.levels_arr.size() - 1):
+			save_score_file.store_string(",")
+		save_score_file.store_string("\n")
+	save_score_file.store_line("}")
+	save_score_file.close()
+
+
 
 # Each time when question asked, it erase from dictionary. Function return size of dict
 func questions_last(qsts):
@@ -107,16 +168,17 @@ func questions_last(qsts):
 
 # If all questions erased from dictionary - go to the next level!
 func ready_next_level(qsts):
-	if(questions_last(qsts) == 0):
+	if(questions_last(qsts) == 0): #and global.level_now != (global.lvls_count - 1)):
 		return true
 	else:
 		return false
+
 
 func _ready():
 	pass
 	# Called every time the node is added to the scene.
 	# Initialization here
 	# Get questions from file:
-#	var questions_file = File.new()
-#	questions_file.open("res://questions/qst.json", File.READ)
-#	global.questions.parse_json(questions_file.get_as_text())
+	#var questions_file = File.new()
+	#questions_file.open("res://questions/qst.json", File.READ)
+	#global.questions.parse_json(questions_file.get_as_text())

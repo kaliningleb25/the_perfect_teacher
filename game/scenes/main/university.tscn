@@ -306,6 +306,7 @@ autostart = false
 
 [node name="ExitDialog" type="PopupDialog" parent="."]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -372,6 +373,7 @@ params/stretch_mode = 0
 
 [node name="GameOverDialog" type="PopupDialog" parent="."]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -435,6 +437,7 @@ flat = false
 
 [node name="MainExitDialog" type="PopupDialog" parent="."]
 
+visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2

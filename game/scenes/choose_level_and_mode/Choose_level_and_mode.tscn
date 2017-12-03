@@ -19,7 +19,7 @@ margin/right = 40.0
 margin/bottom = 40.0
 script/script = ExtResource( 1 )
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="WindowDialog" parent="."]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -29,6 +29,8 @@ margin/left = 421.0
 margin/top = 245.0
 margin/right = 863.0
 margin/bottom = 556.0
+popup/exclusive = false
+window/title = ""
 
 [node name="btn_start" type="Button" parent="Panel"]
 
@@ -73,9 +75,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 33.0
-margin/top = 33.0
+margin/top = 49.0
 margin/right = 93.0
-margin/bottom = 96.0
+margin/bottom = 112.0
 disabled = true
 toggle_mode = false
 click_on_press = true
@@ -87,6 +89,22 @@ textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
+[node name="scr1" type="Label" parent="Panel/btn_first_level" groups=[
+"scrs",
+]]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 75.0
+margin/right = 50.0
+margin/bottom = 89.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="btn_second_level" type="TextureButton" parent="Panel"]
 
 focus/ignore_mouse = false
@@ -94,9 +112,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 107.0
-margin/top = 31.0
+margin/top = 47.0
 margin/right = 167.0
-margin/bottom = 94.0
+margin/bottom = 110.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
@@ -106,6 +124,22 @@ textures/disabled = ExtResource( 4 )
 textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
+
+[node name="scr2" type="Label" parent="Panel/btn_second_level" groups=[
+"scrs",
+]]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 75.0
+margin/right = 50.0
+margin/bottom = 89.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="btn_third_level" type="TextureButton" parent="Panel"]
 
@@ -114,9 +148,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 179.0
-margin/top = 32.0
+margin/top = 48.0
 margin/right = 239.0
-margin/bottom = 95.0
+margin/bottom = 111.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
@@ -126,6 +160,22 @@ textures/disabled = ExtResource( 4 )
 textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
+
+[node name="scr3" type="Label" parent="Panel/btn_third_level" groups=[
+"scrs",
+]]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 75.0
+margin/right = 50.0
+margin/bottom = 89.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="btn_fourth_level" type="TextureButton" parent="Panel"]
 
@@ -134,9 +184,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 250.0
-margin/top = 34.0
+margin/top = 50.0
 margin/right = 312.0
-margin/bottom = 97.0
+margin/bottom = 113.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
@@ -146,6 +196,38 @@ textures/disabled = ExtResource( 4 )
 textures/focused = ExtResource( 5 )
 params/resize_mode = 0
 params/stretch_mode = 0
+
+[node name="scr4" type="Label" parent="Panel/btn_fourth_level" groups=[
+"scrs",
+]]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 75.0
+margin/right = 50.0
+margin/bottom = 89.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="lbl_choose_level" type="Label" parent="Panel"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 42.0
+margin/top = 14.0
+margin/right = 202.0
+margin/bottom = 31.0
+custom_fonts/font = ExtResource( 2 )
+text = "Выберите уровень"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 [node name="PopupDialog" type="PopupDialog" parent="."]
 
@@ -193,6 +275,8 @@ default/filter/gain = 1.0
 default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
+
+[connection signal="hide" from="Panel" to="." method="_on_Panel_hide"]
 
 [connection signal="pressed" from="Panel/btn_start" to="." method="_on_btn_start_pressed"]
 

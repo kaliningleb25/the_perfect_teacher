@@ -44,6 +44,8 @@ func get_question():
 	else:
 		queue_free()
 	
+	
+	
 
 # Which button is pressed
 func answer():
@@ -69,7 +71,8 @@ func check_answer():
 	answer()
 	if (val == check):
 		check_answer = 1
-		global.score += 1
+		global.score += 10
+		global.save_score()
 		global.answer_is_true = true
 
 	elif ((val != check) and (check != -1)):
@@ -81,12 +84,14 @@ func check_answer():
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-
+	print("global.level_now ", global.level_now)
+	print("global.lvls_count ", global.lvls_count)
 #	print("global.test2 size : ", global.test2.size())
 	if (global.check_restart_game_or_exit_to_menu):
 		var questions_file = File.new()
 		questions_file.open("res://questions/qst.json", File.READ)
 		global.questions.parse_json(questions_file.get_as_text())
+		global.lvls_count = global.questions[global.discipline_mode][global.category_mode].size()
 		global.check_restart_game_or_exit_to_menu = false
 
 
@@ -99,6 +104,8 @@ func _ready():
 
 func _process(delta):
 	check_answer()
+#	if (global.question_answered):
+#		global.question_answered = false
 	if (global.gameovercheck):
 		queue_free()
 	
