@@ -21,11 +21,6 @@ onready var string
 onready var q
 # For store value of question (1 or 0)
 onready var val
-#onready var test2 = global.questions[global.discipline_mode][global.category_mode][global.lvl]
-
-#onready var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
-
-
 
 # Get a random question
 func get_question():
@@ -33,8 +28,6 @@ func get_question():
 	global.test = global.questions[global.discipline_mode][global.category_mode][str(global.level_now)]
 	print("global.level_now() = ", global.level_now)
 	print("global.lvl = ", global.lvl)
-#	var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
-#	print("global.test.size() ", global.test.size())
 
 	if (global.test.size() != 0):
 		rand_index = randi()%global.test.keys().size()
@@ -45,9 +38,6 @@ func get_question():
 		global.test.erase(string)
 	else:
 		queue_free()
-	
-	
-	
 
 # Which button is pressed
 func answer():
@@ -84,32 +74,22 @@ func check_answer():
 	return check_answer
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-#	print("global.test.size() ", global.test.size())
-	
-#	print("global.level_now ", global.level_now)
-#	print("global.lvls_count ", global.lvls_count)
-#	print("global.test2 size : ", global.test2.size())
+	# If restart game or exit to menu -> load questions from file again
 	if (global.check_restart_game_or_exit_to_menu):
 		var questions_file = File.new()
 		questions_file.open("res://questions/qst.json", File.READ)
 		global.questions.parse_json(questions_file.get_as_text())
 		global.lvls_count = global.questions[global.discipline_mode][global.category_mode].size()
 		global.check_restart_game_or_exit_to_menu = false
-
-
+		
 	get_question()
 	set_process(true)
 	get_node("paper/question").set_scroll_follow(true)
 	global.student_reach_teacher = true
 	global.question_answered = false
 	
-
 func _process(delta):
 	check_answer()
-#	if (global.question_answered):
-#		global.question_answered = false
 	if (global.gameovercheck):
 		queue_free()
 	

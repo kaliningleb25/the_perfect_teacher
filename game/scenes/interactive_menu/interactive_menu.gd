@@ -1,8 +1,5 @@
 extends Node2D
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
 var screen_size
 var door_programming_size
 
@@ -13,8 +10,7 @@ func _ready():
 	check_sound()
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	get_tree().set_auto_accept_quit(true)
-	# Called every time the node is added to the scene.
-	# Initialization here
+	
 	screen_size = get_viewport_rect().size
 	
 	door_programming_size = get_node("door_programming").get_texture().get_size()	
@@ -54,17 +50,13 @@ func check_sound():
 	else:
 		get_node("bell_off").hide()
 		get_node("bell_on").show()
-
-
-
-
+		
 func _on_bell_on_button_down():
 	get_node("bell_on").hide()
 	get_node("bell_off").show()
 	global.sound = 0
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	
-
 func _on_bell_off_button_down():
 	get_node("bell_off").hide()
 	get_node("bell_on").show()

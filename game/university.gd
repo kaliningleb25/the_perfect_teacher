@@ -18,7 +18,6 @@ onready var timer = get_node("Timer")
 onready var time_to_wait = randf()*3+1
 
 func _ready():
-	get_node("background/opened_door").set_disabled(true)
 	check_sound()
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	timer.start()
@@ -28,26 +27,18 @@ func _ready():
 	questions_file.open("res://questions/qst.json", File.READ)
 	global.questions.parse_json(questions_file.get_as_text())
 	global.lvls_count = global.questions[global.discipline_mode][global.category_mode].size()
-#	print("global.lvls_count ", global.lvls_count)
 	
-	# Called every time the node is added to the scene.
-	# Initialization here
 	global.teacher_pos = teacher.get_global_pos().x
 	var type = get_node("background/type")
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
-	
-#	print("global.test.size() ",global.test.size())
-
-	
-	global.student_auto_mode = true
+		
+#	global.student_auto_mode = true
 	
 	global.gameovercheck = false
 	
-
-
+	print("global.check_exit ", global.check_exit)
 	
-
 	set_process(true)
 
 func _process(delta):
@@ -60,7 +51,7 @@ func _process(delta):
 		get_node("AnimationPlayer").seek(0, true)
 		# Save score in file each time when question is answered (!check weight of process)
 		global.question_answered == false
-		#global.save_score()
+		
 	# Move new student
 	if (global.gameovercheck == false):
 		if (global.can_go):
@@ -93,16 +84,8 @@ func _process(delta):
 
 	# Check if gameover 2
 	if (global.gameovercheck):
-		#get_tree().change_scene("res://scenes/gameover/gameover.tscn")
 		get_node("GameOverDialog").show()
-		#queue_free()
-		
-	
-	
-		
 
-
-	
 func save():
 	var save_file = File.new()
 	save_file.open("res://save.json", File.WRITE)
@@ -120,74 +103,19 @@ func save():
 		save_file.store_string(",\n")
 	save_file.store_line("}")
 	save_file.close()
-	
-#func save_score():
-#	var save_score_file = File.new()
-#	save_score_file.open("res://score/score.json", File.WRITE)
-#	save_score_file.store_line("{")
-#	for i in range (0, global.levels_arr.size()):
-#		save_score_file.store_string("\"")
-#		save_score_file.store_string(global.levels_types.keys()[i])
-#		save_score_file.store_string("\"")
-#		save_score_file.store_string(" : ")
-#		save_score_file.store_string("{\n")
-#		for j in range(0, global.questions[global.discipline_mode][global.levels_types.keys()[i]].size()): 
-#			#print("i", i)
-#			#print("j", j)
-#			#print("global.scores[i][j] ", global.scores[i][j])
-#			save_score_file.store_string("\"")
-#			save_score_file.store_string(str(j))
-#			save_score_file.store_string("\"")
-#			save_score_file.store_string(" : ")
-#			#if (global.category_mode == global.levels_types.keys()[i]):
-#			if (global.level_now == j and global.category_mode == global.levels_types.keys()[i]):
-#				print(global.score)
-#
-				# If score is more than in score results => 
-#				# => save new score in file, 
-#				# remove old score from array,
-#				# insert new score in array 
-#				if (global.score > global.scores[i][j]):
-#					save_score_file.store_string(str(global.score))
-#				#	global.scores[i].remove(j)
-#				#	global.scores[i].insert(j, global.score)
-#				else:
-#					save_score_file.store_string(str(global.scores[i][j]))
-#			else:
-#					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
-#				save_score_file.store_string(str(global.scores[i][j])) #str(0)
-#					#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FOR EXIST SCORES FROM FILE
-#			#else :
-#			#	save_score_file.store_string(str(global.scores[i][j]))
-#			if (j != global.questions[global.discipline_mode][global.levels_types.keys()[i]].size() - 1):
-#				save_score_file.store_string(",")
-#			save_score_file.store_string("\n")
-#		save_score_file.store_string("}")
-#		if (i != global.levels_arr.size() - 1):
-#			save_score_file.store_string(",")
-#		save_score_file.store_string("\n")
-#	save_score_file.store_line("}")
-#	save_score_file.close()
-	
 
 func level_up():
-#	save_score()
 	global.save_score()
 	if (not (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered)):
 		get_node("NextLevelDialog").show()
 	global.can_go = false
 	global.score = 0
-	#global.level_now += 1
-	#load_questions_from_json_file()
 
 # If time is out - next student can go
 func _on_Timer_timeout():
 	global.check_exit = false
 	global.can_go = true
-	if (global.score > 0):
-		get_node("background/opened_door").set_disabled(false)
 	
-
 	get_node("timer_teacher_eyes").set_wait_time(time_to_wait)
 	get_node("timer_teacher_eyes").start()
 	
@@ -198,18 +126,14 @@ func _on_Timer_timeout():
 		if(global.dialog_scene_counter == 0):
 			if (global.gameovercheck == false):
 				if (global.level_now != (global.lvls_count - 1)):
-				
 					global.next_student = true
 					print ("Ready to go to the next level!")
 					level_up()
 			
 	if (global.test.size() == 0 and global.level_now == global.levels_enabled and global.question_answered):
 		if (global.gameovercheck == false):
-		#get_node("win_info").show()
 			global.save_score()
 			get_node("Particles2D").show()
-		
-
 
 func load_questions_from_json_file():
 	# Read from .jsom file about what the level is now and for set text name
@@ -219,24 +143,18 @@ func load_questions_from_json_file():
 	global.lvl = global.levels_and_names["levels"][global.discipline_mode][global.category_mode][str(global.level_now)]
 	get_node("background/name").set_text(global.levels_and_names["names"][global.discipline_mode][global.category_mode][str(global.level_now)])
 
-
-
-
 func _on_opened_door_button_down():
 	if (global.gameovercheck == false):
 		get_node("ExitDialog").show()
-
-
+		
 func _on_no_button_down():
 	 get_node("ExitDialog").hide()
 
-
 func _on_yes_button_down():
-#	save_score()
+	global.check_start = false
+	global.student_auto_mode = false
 	global.check_exit = true
 	global.dialog_scene_counter = 0
-#	global.check_start_new_game = true
-#	timer.stop()
 	global.can_go = false
 	if (get_node("AnimationPlayer").is_playing()):
 		get_node("AnimationPlayer").seek(0, true)
@@ -247,13 +165,15 @@ func _on_yes_button_down():
 		save()
 	global.question_answered = false
 
+	get_node("background/opened_door").set_disabled(false)
+	get_node("background/bell_on").set_disabled(false)
+	get_node("background/bell_off").set_disabled(false)
+
 	var confirm_quit = exit_to_corridor_scene.instance()
 	get_parent().add_child(confirm_quit)
 
 	queue_free()
 	
-
-
 func _on_timer_teacher_eyes_timeout():
 	 # replace with function body
 	time_to_wait = randf()*3+1
@@ -264,26 +184,23 @@ func _on_timer_teacher_eyes_timeout():
 func _on_timer_score_timeout():
 	get_node("score").set_text("Points: " + str(global.score))
 
-
 func _on_play_again_button_down():
-#	pass
 	global.dialog_scene_counter = 0
 	global.check_restart_game_or_exit_to_menu = true
 	get_node("GameOverDialog").hide()
 	global.score = 0
 	get_node("score").set_text("Points: " + str(0))
 	
-	#if (global.score > 0):
-	#	get_node("background/opened_door").set_disabled(false)
 	get_node("background/bell_on").set_disabled(false)
 	get_node("background/bell_off").set_disabled(false)
-#	queue_free()
-#	var new_game = main_scene.instance()
-#	get_parent().add_child(new_game)
+
 	global.gameovercheck = false
 	
 
 func exit_to_interactive_menu():
+	global.check_start = false
+	global.student_auto_mode = false
+	global.check_exit = true
 	global.dialog_scene_counter = 0
 	global.can_go = false
 	get_node("AnimationPlayer").seek(0, true)
@@ -305,9 +222,6 @@ func exit_to_interactive_menu():
 	
 	global.gameovercheck = false
 	queue_free()
-#	print(get_child_count())
-	#for i in range(0, get_child_count()):
-	 #   get_child(i).queue_free()
 
 func _on_exit_to_interactive_menu_button_down():
 	exit_to_interactive_menu()
@@ -316,24 +230,19 @@ func _notification(what):
 	if (what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST):
 		get_node("MainExitDialog").show()
 
-
 func _on_main_yes_button_down():
-	#global.save_score()
 	if (global.level_now > global.levels_enabled):
 		save()
 	get_tree().quit()
 
-
 func _on_main_no_button_down():
 	get_node("MainExitDialog").hide()
-
 
 func _on_btn_next_lvl_button_down():
 	get_node("NextLevelDialog").hide()
 	global.can_go = true
 	global.level_now += 1
 	load_questions_from_json_file()
-
 
 func _on_btn_goto_lecture_button_down():
 	var lectures_file = File.new()
