@@ -1,0 +1,49 @@
+[gd_resource type="Animation" format=1]
+
+[resource]
+
+resource/name = "teacher_read"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("background/teacher/head/left_eye:transform/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( -211.124, 101.987 ), Vector2( -211.124, 122.666 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("background/teacher/head/right_eye:transform/pos")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 1,
+"values": [ Vector2( 215.767, 102.663 ), Vector2( 215.768, 122.194 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("background/teacher/head/left_eyebrow:transform/pos")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -219.583, 17.7084 ), Vector2( -218.435, 34.9409 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("background/teacher/head/right_eyebrow:transform/pos")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 221.355, 17.7083 ), Vector2( 221.355, 38.3875 ) ]
+}
+

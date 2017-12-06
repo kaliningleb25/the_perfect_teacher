@@ -1,0 +1,15 @@
+{
+	"programming" : {
+		"c_plus_plus" : {
+			"0" : ["http://cppstudio.com/post/1984/", "http://cppstudio.com/post/1980/", "http://cppstudio.com/post/348/", "http://cppstudio.com/post/352/", "http://cppstudio.com/post/361/", "http://cppstudio.com/post/306/"],
+			"1" : ["http://cppstudio.com/post/213/", "http://cppstudio.com/post/259/", "http://cppstudio.com/post/297/", "http://cppstudio.com/post/286/", "http://cppstudio.com/post/279/", "http://cppstudio.com/post/310/"],
+			"2" : ["http://cppstudio.com/post/437/", "http://cppstudio.com/post/429/", "http://cppstudio.com/post/423/", "http://cppstudio.com/post/389/"],
+			"3" : ["http://cppstudio.com/post/446/"],
+			"4" : "test"
+		},
+		"java" : {
+			"0" : ["http://google.com"],
+			"1" : ["http://yandex.ru"]
+		}
+	}
+}

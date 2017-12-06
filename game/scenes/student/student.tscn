@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=1]
 
-[ext_resource path="res://scenes/main/student.png" type="Texture" id=1]
+[ext_resource path="res://scenes/main/student2.png" type="Texture" id=1]
 [ext_resource path="res://scenes/student/student.gd" type="Script" id=2]
 
 [node name="student1" type="Sprite"]
 
-transform/pos = Vector2( 88.5657, 694.837 )
+transform/pos = Vector2( 37.3676, 319.055 )
 texture = ExtResource( 1 )
 script/script = ExtResource( 2 )
 
