@@ -14,6 +14,7 @@ func _ready():
 	get_node("Panel").show()
 	load_game()
 	load_score()
+#	load_questions()
 	print("hi")
 
 		
@@ -32,16 +33,19 @@ func _ready():
 		global.levels_enabled = 3
 		
 
-	print(global.questions[global.discipline_mode][global.levels_types.keys()[global.index_of_level]].size())
+	
 	
 
-
+	
 	print(array_of_srcs)
-	print(global.questions[global.discipline_mode][global.levels_types.keys()[global.index_of_level]].size())
 	
+#	for i in range (0, global.questions[global.discipline_mode][global.category_mode].keys().size()):
+#	print("! ", global.questions[global.discipline_mode][global.category_mode].keys()[0])
+#	print("! ", global.questions[global.discipline_mode][global.category_mode]["c_lvl1"].size())
+
 #	for i in range (0, array_of_srcs.size()):
 	for j in range (0, global.questions[global.discipline_mode][global.levels_types.keys()[global.index_of_level]].size()):
-		array_of_srcs[j].set_text(str(global.scores[global.index_of_level][j]))
+		array_of_srcs[j].set_text(str(global.scores[global.index_of_level][j]) + "/" + str(global.questions[global.discipline_mode][global.category_mode][str(j)].size() * 10))
 
 func load_game():
 	var save_file = File.new()
@@ -99,7 +103,10 @@ func load_score():
 #			print("j ", j)
 #			print("global.scores[i][j] ", global.scores[i][j])
 
-	
+func load_questions():
+	var questions_file = File.new()
+	questions_file.open("res://questions/qst.json", File.READ)
+	global.questions.parse_json(questions_file.get_as_text())
 	
 
 # Start game with selected category and level:

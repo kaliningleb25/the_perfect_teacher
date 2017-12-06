@@ -109,6 +109,7 @@ var student_wait = false
 
 var key_up_pressed = false
 
+var all_scores
 
 
 

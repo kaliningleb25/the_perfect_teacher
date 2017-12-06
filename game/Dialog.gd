@@ -30,7 +30,9 @@ onready var val
 # Get a random question
 func get_question():
 	randomize()
-	global.test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
+	global.test = global.questions[global.discipline_mode][global.category_mode][str(global.level_now)]
+	print("global.level_now() = ", global.level_now)
+	print("global.lvl = ", global.lvl)
 #	var test = global.questions[global.discipline_mode][global.category_mode][global.lvl]
 #	print("global.test.size() ", global.test.size())
 
@@ -84,8 +86,10 @@ func check_answer():
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	print("global.level_now ", global.level_now)
-	print("global.lvls_count ", global.lvls_count)
+#	print("global.test.size() ", global.test.size())
+	
+#	print("global.level_now ", global.level_now)
+#	print("global.lvls_count ", global.lvls_count)
 #	print("global.test2 size : ", global.test2.size())
 	if (global.check_restart_game_or_exit_to_menu):
 		var questions_file = File.new()

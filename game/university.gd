@@ -18,7 +18,7 @@ onready var timer = get_node("Timer")
 onready var time_to_wait = randf()*3+1
 
 func _ready():
-	
+	get_node("background/opened_door").set_disabled(true)
 	check_sound()
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	timer.start()
@@ -37,6 +37,7 @@ func _ready():
 	type.set_text(global.ekz_type)
 	load_questions_from_json_file()
 	
+#	print("global.test.size() ",global.test.size())
 
 	
 	global.student_auto_mode = true
@@ -96,7 +97,7 @@ func _process(delta):
 		get_node("GameOverDialog").show()
 		#queue_free()
 		
-		
+	
 	
 		
 
@@ -183,13 +184,16 @@ func level_up():
 func _on_Timer_timeout():
 	global.check_exit = false
 	global.can_go = true
-
+	if (global.score > 0):
+		get_node("background/opened_door").set_disabled(false)
 	
 
 	get_node("timer_teacher_eyes").set_wait_time(time_to_wait)
 	get_node("timer_teacher_eyes").start()
 	
-	if(global.ready_next_level(global.questions[global.discipline_mode][global.category_mode][global.lvl].keys())):
+	if(global.ready_next_level(global.questions[global.discipline_mode][global.category_mode][str(global.level_now)].keys())):
+		print("global.level_now() = ", global.level_now)
+		print("global.lvl = ", global.lvl)
 		global.next_student = false
 		if(global.dialog_scene_counter == 0):
 			if (global.gameovercheck == false):
@@ -269,7 +273,8 @@ func _on_play_again_button_down():
 	global.score = 0
 	get_node("score").set_text("Points: " + str(0))
 	
-	get_node("background/opened_door").set_disabled(false)
+	#if (global.score > 0):
+	#	get_node("background/opened_door").set_disabled(false)
 	get_node("background/bell_on").set_disabled(false)
 	get_node("background/bell_off").set_disabled(false)
 #	queue_free()
