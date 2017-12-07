@@ -98,7 +98,7 @@ var music_play = false
 
 func save_score():
 	var save_score_file = File.new()
-	save_score_file.open("res://score/score.json", File.WRITE)
+	save_score_file.open_encrypted_with_pass("res://score/score.json", File.WRITE, "score")
 	save_score_file.store_line("{")
 	for i in range (0, global.levels_arr.size()):
 		save_score_file.store_string("\"")
