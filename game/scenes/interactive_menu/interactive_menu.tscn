@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://scenes/interactive_menu/interactive_menu.gd" type="Script" id=1]
 [ext_resource path="res://art/interactive_menu/corridor.png" type="Texture" id=2]
@@ -7,6 +7,19 @@
 [ext_resource path="res://sound/sample_door_opened.tres" type="SampleLibrary" id=5]
 [ext_resource path="res://art/main/bell4.png" type="Texture" id=6]
 [ext_resource path="res://art/main/bell4_off.png" type="Texture" id=7]
+[ext_resource path="res://fonts/google_noto_mono.fnt" type="BitmapFont" id=8]
+[ext_resource path="res://scenes/interactive_menu/hide_sound_hint.tres" type="Animation" id=9]
+[ext_resource path="res://scenes/interactive_menu/show_hints.tres" type="Animation" id=10]
+[ext_resource path="res://scenes/interactive_menu/music_menu.smp" type="Sample" id=11]
+
+[sub_resource type="SampleLibrary" id=1]
+
+samples/music_menu = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 11 )
+}
 
 [node name="Node2D" type="Node2D"]
 
@@ -27,7 +40,7 @@ stretch_mode = 0
 
 [node name="door_programming" type="Sprite" parent="."]
 
-transform/pos = Vector2( 311.079, 334.645 )
+transform/pos = Vector2( 425.079, 335.945 )
 texture = ExtResource( 3 )
 
 [node name="label" type="Label" parent="."]
@@ -36,10 +49,10 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 268.441
-margin/top = 265.273
-margin/right = 354.441
-margin/bottom = 279.273
+margin/left = 384.0
+margin/top = 265.0
+margin/right = 470.0
+margin/bottom = 279.0
 text = "Programming"
 percent_visible = 1.0
 lines_skipped = 0
@@ -100,8 +113,113 @@ textures/normal = ExtResource( 7 )
 params/resize_mode = 0
 params/stretch_mode = 0
 
+[node name="hint_goto_forward" type="Label" parent="."]
+
+visibility/visible = false
+rect/scale = Vector2( 0, 0 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 544.0
+margin/top = 513.0
+margin/right = 864.0
+margin/bottom = 530.0
+custom_fonts/font = ExtResource( 8 )
+text = "Стрелка вправо (>)  идти вперед"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="hint_goto_back" type="Label" parent="."]
+
+visibility/visible = false
+rect/scale = Vector2( 0, 0 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 16.0
+margin/top = 513.0
+margin/right = 326.0
+margin/bottom = 550.0
+custom_fonts/font = ExtResource( 8 )
+text = "Стрелка влево (<) -  идти назад"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="hint_enter_the_door" type="Label" parent="."]
+
+visibility/visible = false
+rect/scale = Vector2( 0, 0 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 311.0
+margin/top = 543.0
+margin/right = 641.0
+margin/bottom = 600.0
+custom_fonts/font = ExtResource( 8 )
+text = "Стрелка вверх (^) - войти в дверь"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/hide_sound_hint = ExtResource( 9 )
+anims/show_hints = ExtResource( 10 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = ""
+
+[node name="hint_sound" type="Label" parent="."]
+
+visibility/visible = false
+rect/scale = Vector2( 0, 0 )
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 104.0
+margin/top = 44.0
+margin/right = 405.0
+margin/bottom = 69.0
+custom_fonts/font = ExtResource( 8 )
+custom_colors/font_color = Color( 0.30365, 0.35546, 0.777344, 1 )
+text = "Звонок включает/выключает звук"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Timer_for_sound_hint" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="music_menu_2d" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 1 )
+config/pitch_random = 0.0
+
 [connection signal="button_down" from="bell_on" to="." method="_on_bell_on_button_down"]
 
 [connection signal="button_down" from="bell_off" to="." method="_on_bell_off_button_down"]
+
+[connection signal="timeout" from="Timer_for_sound_hint" to="." method="_on_Timer_for_sound_hint_timeout"]
 
 

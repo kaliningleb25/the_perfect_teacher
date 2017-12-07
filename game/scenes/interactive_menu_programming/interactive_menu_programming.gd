@@ -34,6 +34,8 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	if (not (get_node("music_menu_2d").is_voice_active(0) )):
+		get_node("music_menu_2d").play("music_menu")	
 	print("test")
 #	print(global.student_auto_mode)
 	if (global.student_auto_mode == false):

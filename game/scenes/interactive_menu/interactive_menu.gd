@@ -6,7 +6,16 @@ var door_programming_size
 onready var scene = load("res://scenes/interactive_menu_programming/interactive_menu_programming.tscn")
 onready var door_programming = get_node("door_programming")
 
+
 func _ready():
+
+	if (not (global.student_step_right and global.student_step_left and global.student_enter_the_door) ):
+		get_node("AnimationPlayer").play("show_hints")
+		get_node("hint_enter_the_door").show()
+		get_node("hint_goto_forward").show()
+		get_node("hint_goto_back").show()
+	if (not global.sound_timer):
+		get_node("hint_sound").show()
 	check_sound()
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	get_tree().set_auto_accept_quit(true)
@@ -21,6 +30,8 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	if (not (get_node("music_menu_2d").is_voice_active(0) )):
+		get_node("music_menu_2d").play("music_menu")
 	var stud_pos = get_node("stud/torso").get_pos()
 	var label = get_node("label")
 	var door_programming_rect = Rect2( get_node("door_programming").get_pos() - door_programming_size*0.5, door_programming_size )
@@ -33,6 +44,13 @@ func _process(delta):
 		var new_interactive_menu_programming = scene.instance()
 		get_parent().add_child(new_interactive_menu_programming)
 		queue_free()
+		
+	if (global.student_step_right):
+		get_node("hint_goto_forward").hide()
+	if (global.student_step_left):
+		get_node("hint_goto_back").hide()
+	if (global.student_enter_the_door):
+		get_node("hint_enter_the_door").hide()
 
 
 func _on_TextureButton_toggled( pressed ):
@@ -62,3 +80,8 @@ func _on_bell_off_button_down():
 	get_node("bell_on").show()
 	global.sound = 1
 	AudioServer.set_fx_global_volume_scale(global.sound)
+
+
+func _on_Timer_for_sound_hint_timeout():
+	get_node("AnimationPlayer").play("hide_sound_hint")
+	global.sound_timer = true

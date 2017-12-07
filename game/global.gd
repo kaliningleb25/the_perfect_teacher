@@ -88,6 +88,12 @@ var student_wait = false
 var key_up_pressed = false
 var check_start = false
 
+var student_step_right = false
+var student_step_left = false
+var student_enter_the_door = false
+var sound_timer = false
+
+var music_play = false
 
 
 func save_score():

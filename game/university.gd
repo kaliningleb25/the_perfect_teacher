@@ -18,6 +18,8 @@ onready var timer = get_node("Timer")
 onready var time_to_wait = randf()*3+1
 
 func _ready():
+	if (global.level_now == 0):
+		get_node("Panel_hint").show()
 	check_sound()
 	AudioServer.set_fx_global_volume_scale(global.sound)
 	timer.start()
@@ -42,6 +44,8 @@ func _ready():
 	set_process(true)
 
 func _process(delta):
+	if (not (get_node("music_main_2d").is_voice_active(0) )) and global.music_play:
+		get_node("music_main_2d").play("music_main2")	
 	if (global.student_reach_teacher == true):
 		get_node("AnimationPlayer").play("teacher_read")
 		get_node("Timer_How_Long_Answered").start()
@@ -85,6 +89,8 @@ func _process(delta):
 	# Check if gameover 2
 	if (global.gameovercheck):
 		get_node("GameOverDialog").show()
+		
+
 
 func save():
 	var save_file = File.new()
@@ -156,6 +162,7 @@ func _on_yes_button_down():
 	global.check_exit = true
 	global.dialog_scene_counter = 0
 	global.can_go = false
+	global.music_play = false
 	if (get_node("AnimationPlayer").is_playing()):
 		get_node("AnimationPlayer").seek(0, true)
 	global.check_restart_game_or_exit_to_menu = true
@@ -203,6 +210,7 @@ func exit_to_interactive_menu():
 	global.check_exit = true
 	global.dialog_scene_counter = 0
 	global.can_go = false
+	global.music_play = false
 	get_node("AnimationPlayer").seek(0, true)
 	global.check_restart_game_or_exit_to_menu = true
 	get_node("GameOverDialog").hide()
@@ -264,11 +272,16 @@ func _on_btn_exit_button_down():
 
 
 func _on_Timer_Before_Start_timeout():
+	if (not (get_node("music_main_2d").is_voice_active(0) )):
+		get_node("music_main_2d").play("music_main2")	
+	global.music_play = true
 	get_node("SamplePlayer").play("door_opened2")
 	global.check_exit = false
 	global.can_go = true
 	get_node("background/closed_door").hide()
 	get_node("background/opened_door").show()
+	# Hide rules of game
+	get_node("AnimationPlayer").play("hide_hint_rules_of_game")
 
 
 func check_sound():

@@ -74,6 +74,8 @@ func check_answer():
 	return check_answer
 
 func _ready():
+	get_node("SamplePlayer").play("paper")
+	
 	# If restart game or exit to menu -> load questions from file again
 	if (global.check_restart_game_or_exit_to_menu):
 		var questions_file = File.new()

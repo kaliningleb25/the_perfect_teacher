@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://scenes/interactive_menu_programming/interactive_menu_programming.gd" type="Script" id=1]
 [ext_resource path="res://art/interactive_menu/corridor.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scenes/interactive_menu_programming/knock_on_the_door2.smp" type="Sample" id=6]
 [ext_resource path="res://art/main/bell4.png" type="Texture" id=7]
 [ext_resource path="res://art/main/bell4_off.png" type="Texture" id=8]
+[ext_resource path="res://scenes/interactive_menu/music_menu.smp" type="Sample" id=9]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -16,6 +17,15 @@ samples/knock_on_the_door2 = {
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 6 )
+}
+
+[sub_resource type="SampleLibrary" id=2]
+
+samples/music_menu = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 9 )
 }
 
 [node name="Node2D" type="Node2D"]
@@ -108,9 +118,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 5.0
-margin/top = 2.0
+margin/top = 4.0
 margin/right = 85.0
-margin/bottom = 88.0
+margin/bottom = 90.0
 toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
@@ -135,6 +145,17 @@ shortcut = null
 textures/normal = ExtResource( 8 )
 params/resize_mode = 0
 params/stretch_mode = 0
+
+[node name="music_menu_2d" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 2 )
+config/pitch_random = 0.0
 
 [connection signal="button_down" from="bell_on" to="." method="_on_bell_on_button_down"]
 

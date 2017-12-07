@@ -61,13 +61,18 @@ func _process(delta):
 				# Move student left and right
 			if (stud_pos.x > 0 and Input.is_action_pressed("ui_left")):
 				stud_pos.x += -100 * delta
+				global.student_step_left = true
 				if (not get_node("AnimationPlayer").is_playing()): 
 					get_node("AnimationPlayer").play("student_move")
 			if (stud_pos.x < screen_size.x and Input.is_action_pressed("ui_right")):
 				stud_pos.x += 100 * delta
+				global.student_step_right = true
 				if (not get_node("AnimationPlayer").is_playing()): 
 					get_node("AnimationPlayer").play("student_move")
 			get_node("torso").set_pos(stud_pos)
+			
+			if (Input.is_action_pressed("ui_up")):
+				global.student_enter_the_door = true
 			
 			if (not Input.is_action_pressed("ui_left") and not Input.is_action_pressed("ui_right")):
 				get_node("AnimationPlayer").play("rest")

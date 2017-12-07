@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=1]
+[gd_scene load_steps=35 format=1]
 
 [ext_resource path="res://university.gd" type="Script" id=1]
 [ext_resource path="res://art/main/lecture hall 1.png" type="Texture" id=2]
@@ -28,22 +28,40 @@
 [ext_resource path="res://scenes/interactive_menu/door_opened2.smp" type="Sample" id=26]
 [ext_resource path="res://scenes/main/pen_write_answer.smp" type="Sample" id=27]
 [ext_resource path="res://scenes/main/teacher_sigh.smp" type="Sample" id=28]
+[ext_resource path="res://scenes/main/music_main2.smp" type="Sample" id=29]
 
-[sub_resource type="ColorRamp" id=1]
+[sub_resource type="Animation" id=1]
+
+resource/name = "hide_hint_rules_of_game"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Panel_hint:rect/pos")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 1 ),
+"transitions": FloatArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 81, 478 ), Vector2( -529, 478 ) ]
+}
+
+[sub_resource type="ColorRamp" id=2]
 
 offsets = FloatArray( 0, 0.222222, 0.403509, 0.719298, 0.964912, 1 )
 colors = ColorArray( 0.707031, 0.193329, 0.193329, 1, 0.648438, 0.263428, 0.263428, 1, 0.306767, 0.734375, 0.218018, 1, 0.880847, 0.886719, 0.135086, 1, 0.288071, 0.674633, 0.792969, 1, 1, 1, 1, 1 )
 
-[sub_resource type="SampleLibrary" id=2]
+[sub_resource type="SampleLibrary" id=3]
 
 samples/door_opened2 = {
-"db": 0.0,
+"db": -5.0,
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 26 )
 }
 
-[sub_resource type="SampleLibrary" id=3]
+[sub_resource type="SampleLibrary" id=4]
 
 samples/pen_write_answer = {
 "db": 0.0,
@@ -56,6 +74,15 @@ samples/teacher_sigh = {
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 28 )
+}
+
+[sub_resource type="SampleLibrary" id=5]
+
+samples/music_main2 = {
+"db": 0.0,
+"pitch": 1.0,
+"priority": 0,
+"sample": ExtResource( 29 )
 }
 
 [node name="Node2D" type="Node2D"]
@@ -132,7 +159,7 @@ max_lines_visible = -1
 
 [node name="closed_door" type="Sprite" parent="background"]
 
-transform/pos = Vector2( 2.75168, 215.317 )
+transform/pos = Vector2( 2.75168, 249.317 )
 transform/scale = Vector2( 0.175816, 0.175816 )
 texture = ExtResource( 5 )
 
@@ -179,9 +206,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = -1.0
-margin/top = 62.0
+margin/top = 97.0
 margin/right = 158.0
-margin/bottom = 366.0
+margin/bottom = 401.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -241,6 +268,7 @@ texture = ExtResource( 16 )
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
+anims/hide_hint_rules_of_game = SubResource( 1 )
 anims/teacher_read = ExtResource( 17 )
 playback/active = true
 playback/speed = 1.0
@@ -626,19 +654,19 @@ params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
 randomness/spread = 2.0
 color/color = Color( 0.71875, 0.244263, 0.244263, 1 )
-color/color_ramp = SubResource( 1 )
+color/color_ramp = SubResource( 2 )
 
 [node name="Timer_Before_Start" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 1.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
 [node name="SamplePlayer" type="SamplePlayer" parent="."]
 
 config/polyphony = 1
-config/samples = SubResource( 2 )
+config/samples = SubResource( 3 )
 default/volume_db = 0.0
 default/pitch_scale = 1.0
 default/pan = 0.0
@@ -655,7 +683,7 @@ default/chorus_send = 0.0
 [node name="SamplePlayer_Teacher" type="SamplePlayer" parent="."]
 
 config/polyphony = 1
-config/samples = SubResource( 3 )
+config/samples = SubResource( 4 )
 default/volume_db = 0.0
 default/pitch_scale = 1.0
 default/pan = 0.0
@@ -675,6 +703,48 @@ process_mode = 1
 wait_time = 3.0
 one_shot = true
 autostart = false
+
+[node name="Panel_hint" type="Panel" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 38.0
+margin/top = 478.0
+margin/right = 552.0
+margin/bottom = 661.0
+
+[node name="hint_rules_of_game" type="Label" parent="Panel_hint"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 16.0
+margin/top = 9.0
+margin/right = 482.0
+margin/bottom = 174.0
+custom_fonts/font = ExtResource( 21 )
+text = "Студенты приходят к Вам с решенными билетами. Вам решать - правильный или неправильный ответ дал студент.
+Если Вы выбрали верный вариант - +10 очков!
+Игра завершается если Вы выбрали неверный вариант(Вы уволены) или если образовалась очередь из 3 студентов"
+autowrap = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="music_main_2d" type="SamplePlayer2D" parent="."]
+
+params/volume_db = 0.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = SubResource( 5 )
+config/pitch_random = 0.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 
